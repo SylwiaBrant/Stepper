@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  StyleSheet, Text, View, StatusBar, Button,
+  StyleSheet, Text, View, StatusBar,
 } from 'react-native'
+import { Button } from 'native-base'
 import { colors } from 'theme'
 
 const styles = StyleSheet.create({
@@ -19,18 +20,26 @@ const styles = StyleSheet.create({
   },
 })
 
-const Counter = ({ route, navigation }) => {
-  const from = route?.params?.from
+const Counter = () => {
+  const [buttonTitle, setButtonTitle] = useState('Start')
+
+  const onClickHandler = () => {
+    setButtonTitle(buttonTitle === 'Start' ? 'Stop' : 'Start')
+  }
+  const state = {
+    stepCount: 0,
+  }
   return (
     <View style={styles.root}>
-      <StatusBar barStyle="light-content" />
-      <Text style={styles.title}>{`Details (from ${from})`}</Text>
       <Button
-        title="Start"
-        color="white"
+        color="black"
         backgroundColor={colors.pink}
-        onPress={navigation.goBack}
-      />
+        onPress={onClickHandler}
+      >
+        {buttonTitle}
+      </Button>
+      <StatusBar barStyle="light-content" />
+      <Text>Steps: {state.stepCount}</Text>
     </View>
   )
 }
