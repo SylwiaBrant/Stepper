@@ -3,6 +3,7 @@ import { View } from 'react-native'
 import { Provider } from 'react-redux'
 import store from 'utils/store'
 import 'utils/ignore'
+import { NativeBaseProvider } from 'native-base'
 
 // assets
 import { imageAssets } from 'theme/images'
@@ -28,9 +29,11 @@ const App = () => {
   // rendering
   if (!didLoad) return <View />
   return (
-    <Provider store={store}>
-      <Router />
-    </Provider>
+    <NativeBaseProvider>
+      <Provider store={store}>
+        <Router />
+      </Provider>
+    </NativeBaseProvider>
   )
 }
 
