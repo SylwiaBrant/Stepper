@@ -38,18 +38,20 @@ const styles = StyleSheet.create({
 const Counter = () => {
   const [isActive, setActive] = useState(false);
   const [currentStepCount, setCurrentStepCount] = useState(0);
-  let subscription;
+  const [subscription, setSubscription] = useState(null);
 
   const onClickStart = () => {
-      subscription = Pedometer.watchStepCount(result => {
+      let subs = Pedometer.watchStepCount(result => {
         setCurrentStepCount(result.steps);
       });
+      setSubscription(subs);
       setActive(true);
   }
 
   const onClickCancel = () => {
       console.log(subscription)
       subscription.remove();
+      setSubscription(null);
       setActive(false);
   }
 
