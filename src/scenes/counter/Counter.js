@@ -18,9 +18,6 @@ import {
   Box
   } from 'native-base';
 
-const START = "START";
-const STOP = "STOP";
-
 const styles = StyleSheet.create({
   root: {
     flex: 1,
@@ -75,7 +72,7 @@ const Counter = () => {
                 colorScheme="primary"
                 onPress={onClickCancel}
               >
-                CANCEL
+                STOP
               </Button> : <Button
                 width="50%"
                 size="md"
