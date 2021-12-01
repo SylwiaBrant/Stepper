@@ -1,11 +1,22 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  StyleSheet, Text, View, StatusBar,
+  StyleSheet, View, StatusBar,
 } from 'react-native'
-import { Button } from 'native-base'
 import { colors } from 'theme'
 import { Pedometer } from 'expo-sensors';
+import {
+  Text,
+  Button,
+  Spacer,
+  Flex,
+  Center,
+  Heading,
+  ScrollView,
+  VStack,
+  Divider,
+  Box
+  } from 'native-base';
 
 const styles = StyleSheet.create({
   root: {
@@ -22,34 +33,72 @@ const styles = StyleSheet.create({
 })
 
 const Counter = () => {
-  const [buttonTitle, setButtonTitle] = useState('Start');
+  const [isActive, setActive] = useState(false);
   const [currentStepCount, setCurrentStepCount] = useState(0);
-  let subscription;
+  const [subscription, setSubscription] = useState(null);
 
-  const onClickHandler = () => {
-    if (buttonTitle === 'Start') {
-      setButtonTitle('Stop');
-      subscription = Pedometer.watchStepCount(result => {
-        setCurrentStepCount(result.steps)
+  const onClickStart = () => {
+      let subs = Pedometer.watchStepCount(result => {
+        setCurrentStepCount(result.steps);
       });
-    } else {
-      setButtonTitle('Start');
-      subscription && subscription.remove();
-      subscription = null;
-    }
+      setSubscription(subs);
+      setActive(true);
   }
 
+  const onClickCancel = () => {
+      console.log(subscription)
+      subscription.remove();
+      setSubscription(null);
+      setActive(false);
+  }
+
+  const onClickSave = () => {
+    console.log('Calling POST on API')
+  }
+
+  const onClickReset = () => {
+    setCurrentStepCount(0);
+  }
   return (
     <View style={styles.root}>
-      <Button
-        color="black"
-        backgroundColor={colors.pink}
-        onPress={onClickHandler}
-      >
-        {buttonTitle}
-      </Button>
-      <StatusBar barStyle="light-content" />
-      <Text>Steps: {currentStepCount}</Text>
+      <Box flex="1" safeAreaTop>
+        <ScrollView>
+          <VStack space={4} w="100%" px="3" alignItems="center">
+            <Heading textAlign="center" size="md">Count your steps</Heading>
+              { isActive ?
+                <Button
+                width="50%"
+                size="md"
+                colorScheme="primary"
+                onPress={onClickCancel}
+              >
+                STOP
+              </Button> : <Button
+                width="50%"
+                size="md"
+                colorScheme="primary"
+                onPress={onClickStart}
+              >
+                START
+              </Button>
+              }
+
+              <Spacer />
+              <StatusBar barStyle="light-content" />
+              <Text color="coolGray.800" fontWeight="bold" fontSize="4xl">{currentStepCount}</Text>
+            <Button.Group
+              mx={{
+                base: "auto",
+                md: 100,
+              }}
+              size="md"
+            >
+              <Button width="40%" colorScheme="info" variant="outline" onPress={onClickReset}>RESET</Button>
+              <Button width="40%" colorScheme="info" onPress={onClickSave}>SAVE</Button>
+            </Button.Group>
+          </VStack>
+        </ScrollView>
+      </Box>
     </View>
   )
 }
