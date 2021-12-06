@@ -1,17 +1,25 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, View, StatusBar } from 'react-native'
+import {
+  StyleSheet, View, StatusBar,
+} from 'react-native'
 import { colors } from 'theme'
+import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { Pedometer } from 'expo-sensors'
 import {
+  Icon,
+  Alert,
   Text,
   Button,
   Spacer,
+  Flex,
+  Center,
   Heading,
   ScrollView,
   VStack,
-  Box,
-} from 'native-base'
+  Divider,
+  Box
+  } from 'native-base'
 
 const styles = StyleSheet.create({
   root: {
@@ -28,23 +36,35 @@ const styles = StyleSheet.create({
 })
 
 const Counter = () => {
-  const [isActive, setActive] = useState(false)
-  const [currentStepCount, setCurrentStepCount] = useState(0)
-  const [subscription, setSubscription] = useState(null)
+  const [isAvailable, setAvailable] = useState(false);
+  const [isActive, setActive] = useState(false);
+  const [currentStepCount, setCurrentStepCount] = useState(0);
+  const [subscription, setSubscription] = useState(null);
+
+  const isPedometerAvailable = () => {
+    Pedometer.isAvailableAsync().then(
+      result => {
+        setAvailable(result);
+      },
+      error => {
+        setAvailable(false);
+      }
+    );
+  }
 
   const onClickStart = () => {
-    const subs = Pedometer.watchStepCount((result) => {
-      setCurrentStepCount(result.steps)
-    })
-    setSubscription(subs)
-    setActive(true)
+      let subs = Pedometer.watchStepCount(result => {
+        setCurrentStepCount(result.steps);
+      });
+      setSubscription(subs);
+      setActive(true);
   }
 
   const onClickCancel = () => {
-    console.log(subscription)
-    subscription.remove()
-    setSubscription(null)
-    setActive(false)
+      console.log(subscription);
+      subscription.remove();
+      setSubscription(null);
+      setActive(false);
   }
 
   const onClickSave = () => {
@@ -52,63 +72,60 @@ const Counter = () => {
   }
 
   const onClickReset = () => {
-    setCurrentStepCount(0)
+    setCurrentStepCount(0);
+  }
+
+  if (isAvailable) {
+    return (
+    <View style={styles.root}>
+      <VStack space={2} alignItems="center">
+        <FontIcon
+          name="exclamation-triangle"
+          color="#9f1239"
+          size={80}
+          solid
+        />
+        <Text marginTop="40px">Pedometer is unavailable on this device.</Text>
+      </VStack>
+    </View>
+    )
   }
   return (
     <View style={styles.root}>
-      <Box flex="1" safeAreaTop>
-        <ScrollView>
-          <VStack space={4} w="100%" px="3" alignItems="center">
-            <Heading textAlign="center" size="md">
-              Count your steps
-            </Heading>
-            {isActive ? (
-              <Button
-                width="50%"
-                size="md"
-                colorScheme="primary"
-                onPress={onClickCancel}
-              >
-                STOP
-              </Button>
-            ) : (
-              <Button
-                width="50%"
-                size="md"
-                colorScheme="primary"
-                onPress={onClickStart}
-              >
-                START
-              </Button>
-            )}
+      <VStack space={4} w="100%" px="3" alignItems="center">
+        <Heading textAlign="center" size="md">Count your steps</Heading>
+          { isActive ?
+            <Button
+            width="50%"
+            size="md"
+            colorScheme="primary"
+            onPress={onClickCancel}
+          >
+            STOP
+          </Button> : <Button
+            width="50%"
+            size="md"
+            colorScheme="primary"
+            onPress={onClickStart}
+          >
+            START
+          </Button>
+          }
 
-            <Spacer />
-            <StatusBar barStyle="light-content" />
-            <Text color="coolGray.800" fontWeight="bold" fontSize="4xl">
-              {currentStepCount}
-            </Text>
-            <Button.Group
-              mx={{
-                base: 'auto',
-                md: 100,
-              }}
-              size="md"
-            >
-              <Button
-                width="40%"
-                colorScheme="info"
-                variant="outline"
-                onPress={onClickReset}
-              >
-                RESET
-              </Button>
-              <Button width="40%" colorScheme="info" onPress={onClickSave}>
-                SAVE
-              </Button>
-            </Button.Group>
-          </VStack>
-        </ScrollView>
-      </Box>
+          <Spacer />
+          <StatusBar barStyle="light-content" />
+          <Text color="coolGray.800" fontWeight="bold" fontSize="4xl">{currentStepCount}</Text>
+        <Button.Group
+          mx={{
+            base: "auto",
+            md: 100,
+          }}
+          size="md"
+        >
+          <Button width="40%" colorScheme="info" variant="outline" onPress={onClickReset}>RESET</Button>
+          <Button width="40%" colorScheme="info" onPress={onClickSave}>SAVE</Button>
+        </Button.Group>
+      </VStack>
     </View>
   )
 }
