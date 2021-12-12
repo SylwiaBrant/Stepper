@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import {
   StyleSheet, View, StatusBar,
@@ -19,7 +19,6 @@ import {
 } from "native-base"
 import { useSelector, useDispatch } from 'react-redux';
 import { loginUser, appReducer } from 'slices/app.slice'
-//import { useHistory} from 'react-router-dom';
 
 const styles = StyleSheet.create({
   root: {
@@ -35,18 +34,20 @@ const styles = StyleSheet.create({
   },
 })
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
 
   //const history = useHistory();
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (!isLoggedIn) {
       //history.push("/counter");
       console.log("not logged in");
     }
   }, [isLoggedIn]);
+
+  const handleChange = () => {}
 
   const handleLogin = () => {
   console.log("trying to log in");
@@ -132,15 +133,26 @@ const Login = () => {
               Sign Up
             </Link>
           </HStack>
-          {(props.error || error) && (
+          {/* {(props.error || error) && (
             <Alert severity="error" onClick={() => setError(null)}>
               {props.error || error}
             </Alert>
-          )}
+          )} */}
         </VStack>
       </Box>
     </View>
   )
+}
+
+
+Login.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }),
+}
+
+Login.defaultProps = {
+  navigation: { navigate: () => null },
 }
 
 export default Login

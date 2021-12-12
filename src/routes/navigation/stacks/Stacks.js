@@ -58,6 +58,13 @@ export const HomeNavigator = () => (
         headerTitle: () => <HeaderTitle />,
       })}
     />
+        <Stack.Screen
+      name="Login"
+      component={Login}
+      options={{
+        title: 'Login',
+      }}
+    />
   </Stack.Navigator>
 )
 
@@ -87,12 +94,10 @@ export const ProfileNavigator = () => (
     />
     <Stack.Screen
       name="Login"
-      component={Profile}
-      options={({ navigation }) => ({
+      component={Login}
+      options={{
         title: 'Login',
-        headerLeft: () => <HeaderLeft navigation={navigation} />,
-        headerTitle: () => <HeaderTitle />,
-      })}
+      }}
     />
   </Stack.Navigator>
 )
@@ -137,47 +142,62 @@ export const CounterNavigator = () => (
         title: 'Details',
       }}
     />
+    <Stack.Screen
+      name="Login"
+      component={Login}
+      options={{
+        title: 'Login',
+      }}
+    />
   </Stack.Navigator>
 )
-  export const LoginNavigator = () => (
-    <Stack.Navigator
-      initialRouteName="Login"
-      headerMode="screen"
-      screenOptions={navigationProps}
-    >
-      <Stack.Screen
-        name="Counter"
-        component={Counter}
-        options={({ navigation }) => ({
-          title: 'Counter',
-          headerLeft: () => <HeaderLeft navigation={navigation} />,
-          headerTitle: () => <HeaderTitle />,
-        })}
-      />
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={({ navigation }) => ({
-          title: 'Home',
-          headerLeft: () => <HeaderLeft navigation={navigation} />,
-          headerTitle: () => <HeaderTitle />,
-        })}
-      />
-      <Stack.Screen
-        name="Profile"
-        component={Profile}
-        options={({ navigation }) => ({
-          title: 'Profile',
-          headerLeft: () => <HeaderLeft navigation={navigation} />,
-          headerTitle: () => <HeaderTitle />,
-        })}
-      />
-      <Stack.Screen
-        name="Details"
-        component={Details}
-        options={{
-          title: 'Details',
-        }}
-      />
-    </Stack.Navigator>
+
+export const LoginNavigator = () => (
+  <Stack.Navigator
+    initialRouteName="Login"
+    headerMode="screen"
+    screenOptions={navigationProps}
+  >
+    <Stack.Screen
+      name="Counter"
+      component={Counter}
+      options={({ navigation }) => ({
+        title: 'Counter',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
+    />
+    <Stack.Screen
+      name="Home"
+      component={Home}
+      options={({ navigation }) => ({
+        title: 'Home',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
+    />
+    <Stack.Screen
+      name="Profile"
+      component={Profile}
+      options={({ navigation }) => ({
+        title: 'Profile',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
+    />
+    <Stack.Screen
+      name="Details"
+      component={Details}
+      options={{
+        title: 'Details',
+      }}
+    />
+    <Stack.Screen
+      name="Login"
+      component={Login}
+      options={{
+        title: 'Login',
+      }}
+    />
+  </Stack.Navigator>
 )

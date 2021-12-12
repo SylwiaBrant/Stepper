@@ -9,7 +9,6 @@ import { Box, Flex, HStack, Center, Divider } from 'native-base'
 import { useSelector, useDispatch } from 'react-redux';
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 
-
 const styles = StyleSheet.create({
   root: {
     flex: 1,

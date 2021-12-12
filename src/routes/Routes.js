@@ -3,12 +3,6 @@ import { Text } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { authenticate } from 'slices/app.slice'
 import Main from './navigation'
-import { NativeRouter, Route, Link } from "react-router-native";
-import Home from 'scenes/home'
-import Profile from 'scenes/profile'
-import Details from 'scenes/details'
-import Counter from 'scenes/counter'
-import Login from 'scenes/login'
 
 const Routes = () => {
   const { isLoggedIn } = useSelector((state) => state.auth)

@@ -4,12 +4,6 @@ import { Provider } from 'react-redux'
 import store from 'utils/store'
 import 'utils/ignore'
 import { NativeBaseProvider } from 'native-base'
-//import { NativeRouter, Switch, Route, Router } from "react-router-native";
-import Home from 'scenes/home'
-import Profile from 'scenes/profile'
-import Details from 'scenes/details'
-import Counter from 'scenes/counter'
-import Login from 'scenes/login'
 import Router from './routes'
 
 // assets

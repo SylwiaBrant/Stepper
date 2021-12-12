@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet, Text, View, StatusBar,
-} from 'react-native'
-import Button from 'components/Button'
-import { colors } from 'theme'
+} from 'react-native';
+import Button from 'components/Button';
+import { colors } from 'theme';
 import { useSelector, useDispatch } from 'react-redux';
-//import { Redirect } from 'react-router-dom';
+
 
 const styles = StyleSheet.create({
   root: {
@@ -24,11 +24,14 @@ const styles = StyleSheet.create({
 
 const Home = ({ navigation }) => {
   const { isLoggedIn } = useSelector(state => state.auth);
-  if (isLoggedIn) {
-    //history.push("/counter");
-    console.log("Navigating to Login from Home. is logged in state: " + isLoggedIn);
-    <Redirect to="/login" />
-  }
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      // history.push("/counter");
+      console.log("Navigating to Login from Home. is logged in state: " + isLoggedIn);
+      navigation.navigate('Login', { from: 'Home' })
+    }
+  }, [])
 
   return (
     <View style={styles.root}>
