@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 
 const Home = ({ navigation }) => {
   const { isLoggedIn } = useSelector(state => state.auth);
-  if (!isLoggedIn) {
+  if (isLoggedIn) {
     //history.push("/counter");
     console.log("Navigating to Login from Home. is logged in state: " + isLoggedIn);
     <Redirect to="/login" />
