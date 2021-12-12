@@ -4,10 +4,10 @@ import {
   getDefaultMiddleware,
 } from '@reduxjs/toolkit'
 import logger from 'redux-logger'
-import appReducer from 'slices/app.slice'
+import authReducer from 'slices/app.slice'
 
-const rootReducer = combineReducers({
-  app: appReducer,
+const reducer = combineReducers({
+  auth: authReducer,
   // add more reducers
 })
 
@@ -17,7 +17,7 @@ const defaultMiddleware = getDefaultMiddleware({
 })
 
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: reducer,
   // eslint-disable-next-line no-undef
   middleware: __DEV__ ? defaultMiddleware.concat(logger) : defaultMiddleware,
 })

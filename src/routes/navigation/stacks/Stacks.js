@@ -5,6 +5,7 @@ import Home from 'scenes/home'
 import Profile from 'scenes/profile'
 import Details from 'scenes/details'
 import Counter from 'scenes/counter'
+import Login from 'scenes/login'
 import HeaderLeft from './HeaderLeft'
 import HeaderTitle from './HeaderTitle'
 
@@ -84,6 +85,15 @@ export const ProfileNavigator = () => (
         headerTitle: () => <HeaderTitle />,
       })}
     />
+    <Stack.Screen
+      name="Login"
+      component={Profile}
+      options={({ navigation }) => ({
+        title: 'Login',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
+    />
   </Stack.Navigator>
 )
 
@@ -128,4 +138,46 @@ export const CounterNavigator = () => (
       }}
     />
   </Stack.Navigator>
+)
+  export const LoginNavigator = () => (
+    <Stack.Navigator
+      initialRouteName="Login"
+      headerMode="screen"
+      screenOptions={navigationProps}
+    >
+      <Stack.Screen
+        name="Counter"
+        component={Counter}
+        options={({ navigation }) => ({
+          title: 'Counter',
+          headerLeft: () => <HeaderLeft navigation={navigation} />,
+          headerTitle: () => <HeaderTitle />,
+        })}
+      />
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={({ navigation }) => ({
+          title: 'Home',
+          headerLeft: () => <HeaderLeft navigation={navigation} />,
+          headerTitle: () => <HeaderTitle />,
+        })}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={({ navigation }) => ({
+          title: 'Profile',
+          headerLeft: () => <HeaderLeft navigation={navigation} />,
+          headerTitle: () => <HeaderTitle />,
+        })}
+      />
+      <Stack.Screen
+        name="Details"
+        component={Details}
+        options={{
+          title: 'Details',
+        }}
+      />
+    </Stack.Navigator>
 )

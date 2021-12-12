@@ -4,11 +4,18 @@ import { Provider } from 'react-redux'
 import store from 'utils/store'
 import 'utils/ignore'
 import { NativeBaseProvider } from 'native-base'
+import { NativeRouter, Switch, Route, Router } from "react-router-native";
+import Home from 'scenes/home'
+import Profile from 'scenes/profile'
+import Details from 'scenes/details'
+import Counter from 'scenes/counter'
+import Login from 'scenes/login'
+
 
 // assets
 import { imageAssets } from 'theme/images'
 import { fontAssets } from 'theme/fonts'
-import Router from './routes'
+//import {Router} from './routes'
 
 const App = () => {
   // state
@@ -31,7 +38,14 @@ const App = () => {
   return (
     <NativeBaseProvider>
       <Provider store={store}>
-        <Router />
+        <Router>
+          <Switch>
+             <Route exact path="/" path="/home" component={Home} />
+             <Route path="/login" component={Login} />
+             <Route path="/counter" component={Counter} />
+             <Route path="/profile" component={Profile} />
+           </Switch>
+         </Router>
       </Provider>
     </NativeBaseProvider>
   )
