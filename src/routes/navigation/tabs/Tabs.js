@@ -42,6 +42,15 @@ const TabNavigator = () => (
                 solid
               />
             )
+          case 'Login':
+            return (
+              <FontIcon
+                name="running"
+                color={focused ? colors.lightPurple : colors.gray}
+                size={20}
+                solid
+              />
+            )
           default:
             return <View />
         }

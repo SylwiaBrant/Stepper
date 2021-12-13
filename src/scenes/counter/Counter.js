@@ -1,22 +1,17 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import {
-  StyleSheet, View, StatusBar,
-} from 'react-native'
+import { StyleSheet, View, StatusBar } from 'react-native'
 import { colors } from 'theme'
-import { Pedometer } from 'expo-sensors';
+import { Pedometer } from 'expo-sensors'
 import {
   Text,
   Button,
   Spacer,
-  Flex,
-  Center,
   Heading,
   ScrollView,
   VStack,
-  Divider,
-  Box
-  } from 'native-base';
+  Box,
+} from 'native-base'
 
 const styles = StyleSheet.create({
   root: {
@@ -33,23 +28,23 @@ const styles = StyleSheet.create({
 })
 
 const Counter = () => {
-  const [isActive, setActive] = useState(false);
-  const [currentStepCount, setCurrentStepCount] = useState(0);
-  const [subscription, setSubscription] = useState(null);
+  const [isActive, setActive] = useState(false)
+  const [currentStepCount, setCurrentStepCount] = useState(0)
+  const [subscription, setSubscription] = useState(null)
 
   const onClickStart = () => {
-      let subs = Pedometer.watchStepCount(result => {
-        setCurrentStepCount(result.steps);
-      });
-      setSubscription(subs);
-      setActive(true);
+    const subs = Pedometer.watchStepCount((result) => {
+      setCurrentStepCount(result.steps)
+    })
+    setSubscription(subs)
+    setActive(true)
   }
 
   const onClickCancel = () => {
-      console.log(subscription)
-      subscription.remove();
-      setSubscription(null);
-      setActive(false);
+    console.log(subscription)
+    subscription.remove()
+    setSubscription(null)
+    setActive(false)
   }
 
   const onClickSave = () => {
@@ -57,23 +52,27 @@ const Counter = () => {
   }
 
   const onClickReset = () => {
-    setCurrentStepCount(0);
+    setCurrentStepCount(0)
   }
   return (
     <View style={styles.root}>
       <Box flex="1" safeAreaTop>
         <ScrollView>
           <VStack space={4} w="100%" px="3" alignItems="center">
-            <Heading textAlign="center" size="md">Count your steps</Heading>
-              { isActive ?
-                <Button
+            <Heading textAlign="center" size="md">
+              Count your steps
+            </Heading>
+            {isActive ? (
+              <Button
                 width="50%"
                 size="md"
                 colorScheme="primary"
                 onPress={onClickCancel}
               >
                 STOP
-              </Button> : <Button
+              </Button>
+            ) : (
+              <Button
                 width="50%"
                 size="md"
                 colorScheme="primary"
@@ -81,20 +80,31 @@ const Counter = () => {
               >
                 START
               </Button>
-              }
+            )}
 
-              <Spacer />
-              <StatusBar barStyle="light-content" />
-              <Text color="coolGray.800" fontWeight="bold" fontSize="4xl">{currentStepCount}</Text>
+            <Spacer />
+            <StatusBar barStyle="light-content" />
+            <Text color="coolGray.800" fontWeight="bold" fontSize="4xl">
+              {currentStepCount}
+            </Text>
             <Button.Group
               mx={{
-                base: "auto",
+                base: 'auto',
                 md: 100,
               }}
               size="md"
             >
-              <Button width="40%" colorScheme="info" variant="outline" onPress={onClickReset}>RESET</Button>
-              <Button width="40%" colorScheme="info" onPress={onClickSave}>SAVE</Button>
+              <Button
+                width="40%"
+                colorScheme="info"
+                variant="outline"
+                onPress={onClickReset}
+              >
+                RESET
+              </Button>
+              <Button width="40%" colorScheme="info" onPress={onClickSave}>
+                SAVE
+              </Button>
             </Button.Group>
           </VStack>
         </ScrollView>

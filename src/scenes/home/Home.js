@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import {
   StyleSheet, Text, View, StatusBar,
 } from 'react-native'
 import Button from 'components/Button'
 import { colors } from 'theme'
+import { useSelector } from 'react-redux'
 
 const styles = StyleSheet.create({
   root: {
@@ -20,20 +21,33 @@ const styles = StyleSheet.create({
   },
 })
 
-const Home = ({ navigation }) => (
-  <View style={styles.root}>
-    <StatusBar barStyle="light-content" />
-    <Text style={styles.title}>Home</Text>
-    <Button
-      title="Go to Details"
-      color="white"
-      backgroundColor={colors.lightPurple}
-      onPress={() => {
-        navigation.navigate('Details', { from: 'Home' })
-      }}
-    />
-  </View>
-)
+const Home = ({ navigation }) => {
+  const { isLoggedIn } = useSelector((state) => state.auth)
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      console.log(
+        `Navigating to Login from Home. is logged in state: ${isLoggedIn}`,
+      )
+      navigation.navigate('Login', { from: 'Home' })
+    }
+  }, [])
+
+  return (
+    <View style={styles.root}>
+      <StatusBar barStyle="light-content" />
+      <Text style={styles.title}>Home</Text>
+      <Button
+        title="Go to Details"
+        color="white"
+        backgroundColor={colors.lightPurple}
+        onPress={() => {
+          navigation.navigate('Details', { from: 'Home' })
+        }}
+      />
+    </View>
+  )
+}
 
 Home.propTypes = {
   navigation: PropTypes.shape({
