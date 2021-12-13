@@ -1,12 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  StyleSheet, View, Text, StatusBar,
+  StyleSheet, View, Text, Image,
 } from 'react-native'
-import Button from 'components/Button'
 import { colors } from 'theme'
-import { Box, Flex, HStack, Center, Divider } from 'native-base'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 
 const styles = StyleSheet.create({
@@ -15,7 +13,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-//    backgroundColor: "#847216",
   },
   title: {
     color: '#57534e',
@@ -23,91 +20,135 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   profileUpperDashboard: {
-    width: "100%",
-    backgroundColor: '#AD8fCA',
-    borderBottomLeftRadius: 200,
-    borderBottomRightRadius: 200,
+    width: '100%',
   },
   profileLowerDashboard: {
-    width: "100%",
-    backgroundColor: '#AD86CA',
+    width: '100%',
+    backgroundColor: colors.white,
   },
   badge: {
-    width: "90%",
+    width: '90%',
+    height: 60,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+  },
+  badgeText: {
+    fontSize: 15,
+    color: '#87cefa',
+  },
+  transparentBadge: {
+    width: '90%',
     height: 60,
     paddingHorizontal: 8,
     paddingVertical: 6,
     backgroundColor: 'rgba(256, 256, 256, 0.2)',
-    borderRadius: 4,
-    borderColor: "#fff",
-    borderStyle: "solid",
-    borderWidth: 0.5,
   },
-  badgeText: {
-      fontSize: 15,
-      color: colors.white,
-  }
+  middleBadge: {
+    position: 'absolute',
+    top: -16,
+    backgroundColor: colors.lightBlue,
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+  },
+  outcome: {
+    fontSize: 25,
+    color: colors.darkSlateBlue,
+  },
 })
 
 const Profile = ({ navigation }) => {
-  const { isLoggedIn, user } = useSelector(state => state.auth);
+  const { isLoggedIn } = useSelector((state) => state.auth)
   if (isLoggedIn) {
-    //history.push("/counter");
-    console.log("Navigating to Login from Home. is logged in state: " + isLoggedIn);
+    console.log(
+      `Navigating to Login from Profile. is logged in state: ${isLoggedIn}`,
+    )
+    navigation.navigate('Login', { from: 'Home' })
   }
   return (
     <View style={styles.root}>
-      <View alignItems="center" flex="1" w="100%"
-        style={styles.profileUpperDashboard} flex="1">
-          <Text style={styles.title}>Profile</Text>
-
-          <Text>Lukas09</Text>
-          <Divider my={2} />
-          <FontIcon
-            name="ruler"
-            color={colors.white}
-            size={20}
-            solid
-          />
-          <Text>Waga:</Text>
-          <FontIcon
-            name="weight"
-            color={colors.white}
-            size={20}
-            solid
-          />
-          <Text>Wzrost:</Text>
+      <View
+        flex="1"
+        flexDirection="column"
+        justifyContent="space-evenly"
+        style={styles.profileUpperDashboard}
+      >
+        <Image
+          style={[StyleSheet.absoluteFill, styles.image]}
+          source={require('../../../assets/images/blue-bg.png')}
+        />
+        <View alignItems="center">
+          <Text style={{ fontSize: 40, color: colors.white }}>Lukas09</Text>
+        </View>
+        <View flexDirection="row" justifyContent="space-evenly">
+          <View flexDirection="column" alignItems="center">
+            <FontIcon name="ruler" color={colors.white} size={20} solid />
+            <Text style={{ fontSize: 15, color: colors.white }}>
+              Waga: 85kg
+            </Text>
+          </View>
+          <View flexDirection="column" alignItems="center">
+            <FontIcon name="weight" color={colors.white} size={20} solid />
+            <Text style={{ fontSize: 15, color: colors.white }}>
+              Wzrost: 1,78 m{' '}
+            </Text>
+          </View>
+        </View>
       </View>
-      <View flex="1" flexDirection="column" justifyContent="space-evenly" alignItems="center" style={styles.profileLowerDashboard}>
-        <View style={styles.badge} flexDirection="row" alignItems="center" justifyContent="space-evenly">
-          <FontIcon
-            name="clock"
-            color={colors.white}
-            size={20}
-            regular
-          />
-          <Text style={styles.badgeText}>AVG. ACTIVITY TIME:</Text>
-          <Text style={styles.badgeText}>21 MIN.</Text>
+      <View
+        flex="1"
+        flexDirection="column"
+        justifyContent="space-evenly"
+        alignItems="center"
+        style={styles.profileLowerDashboard}
+      >
+        <View style={styles.middleBadge}>
+          <Text
+            style={{ fontSize: 16, color: colors.white, fontWeight: 'bold' }}
+          >
+            This month:
+          </Text>
         </View>
-        <View style={styles.badge} flexDirection="row" alignItems="center" justifyContent="space-evenly">
-          <FontIcon
-            name="shoe-prints"
-            color={colors.white}
-            size={20}
-            solid
-          />
-          <Text style={styles.badgeText}>AVG. STEPS NUMBER</Text>
-          <Text style={styles.badgeText}>6571</Text>
+        <View
+          style={styles.badge}
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-around"
+        >
+          <View flexDirection="column" alignItems="center">
+            <FontIcon name="clock" color={colors.lightBlue} size={20} regular />
+            <Text style={styles.badgeText}>Avg. time:</Text>
+          </View>
+          <Text style={[styles.badgeText, styles.outcome]}>21 min.</Text>
         </View>
-        <View style={styles.badge} flexDirection="row" alignItems="center" justifyContent="space-evenly">
-          <FontIcon
-            name="running"
-            color={colors.white}
-            size={20}
-            solid
-          />
-          <Text style={styles.badgeText}>MOST POPULAR ACTIVITY:</Text>
-          <Text style={styles.badgeText}>WALKING</Text>
+        <View
+          style={styles.badge}
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-around"
+        >
+          <View flexDirection="column" alignItems="center">
+            <FontIcon
+              name="shoe-prints"
+              color={colors.lightBlue}
+              size={20}
+              solid
+            />
+            <Text style={styles.badgeText}>Avg. steps:</Text>
+          </View>
+          <Text style={[styles.badgeText, styles.outcome]}>6571</Text>
+        </View>
+        <View
+          style={styles.badge}
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-around"
+        >
+          <View flexDirection="column" alignItems="center">
+            <FontIcon name="running" color={colors.lightBlue} size={20} solid />
+            <Text style={styles.badgeText}>Fav activity:</Text>
+          </View>
+          <Text style={[styles.badgeText, styles.outcome]}>Walking</Text>
         </View>
       </View>
     </View>

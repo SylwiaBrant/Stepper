@@ -4,12 +4,12 @@ import { Provider } from 'react-redux'
 import store from 'utils/store'
 import 'utils/ignore'
 import { NativeBaseProvider } from 'native-base'
-import Router from './routes'
 
 // assets
 import { imageAssets } from 'theme/images'
 import { fontAssets } from 'theme/fonts'
-//import {Router} from './routes'
+import Router from './routes'
+// import {Router} from './routes'
 
 const App = () => {
   // state

@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import {
-  StyleSheet, View, StatusBar,
-} from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { colors } from 'theme'
 import {
   Box,
@@ -11,14 +9,10 @@ import {
   VStack,
   FormControl,
   Input,
-  Link,
   Button,
   HStack,
-  Center,
-  NativeBaseProvider,
-} from "native-base"
-import { useSelector, useDispatch } from 'react-redux';
-import { loginUser, appReducer } from 'slices/app.slice'
+} from 'native-base'
+import { useSelector } from 'react-redux'
 
 const styles = StyleSheet.create({
   root: {
@@ -35,34 +29,21 @@ const styles = StyleSheet.create({
 })
 
 const Login = ({ navigation }) => {
-  const [loading, setLoading] = useState(false);
-  const { isLoggedIn } = useSelector((state) => state.auth);
-
-  //const history = useHistory();
+  const { isLoggedIn } = useSelector((state) => state.auth)
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      //history.push("/counter");
-      console.log("not logged in");
+    if (isLoggedIn) {
+      console.log(
+        `Navigating to Login from Profile. is logged in state: ${isLoggedIn}`,
+      )
+      navigation.navigate('Home', { from: 'Login' })
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn])
 
   const handleChange = () => {}
 
   const handleLogin = () => {
-  console.log("trying to log in");
-
-//    setLoading(true);
-//
-//    dispatch(login({ username, password }))
-//      .unwrap()
-//      .then(() => {
-//        props.history.push("/profile");
-//        window.location.reload();
-//      })
-//      .catch(() => {
-//        setLoading(false);
-//      });
+    console.log('trying to log in')
   }
   return (
     <View style={styles.root}>
@@ -72,7 +53,7 @@ const Login = ({ navigation }) => {
           fontWeight="600"
           color="coolGray.800"
           _dark={{
-            color: "warmGray.50",
+            color: 'warmGray.50',
           }}
         >
           Welcome
@@ -80,7 +61,7 @@ const Login = ({ navigation }) => {
         <Heading
           mt="1"
           _dark={{
-            color: "warmGray.200",
+            color: 'warmGray.200',
           }}
           color="coolGray.600"
           fontWeight="medium"
@@ -97,17 +78,17 @@ const Login = ({ navigation }) => {
           <FormControl>
             <FormControl.Label>Password</FormControl.Label>
             <Input type="password" onChange={handleChange} />
-            <Link
+            <Button
               _text={{
-                fontSize: "xs",
-                fontWeight: "500",
-                color: "indigo.500",
+                fontSize: 'xs',
+                fontWeight: '500',
+                color: 'indigo.500',
               }}
               alignSelf="flex-end"
               mt="1"
             >
               Forget Password?
-            </Link>
+            </Button>
           </FormControl>
           <Button mt="2" colorScheme="indigo" onSubmit={handleLogin}>
             Sign in
@@ -117,21 +98,20 @@ const Login = ({ navigation }) => {
               fontSize="sm"
               color="coolGray.600"
               _dark={{
-                color: "warmGray.200",
+                color: 'warmGray.200',
               }}
             >
-              I'm a new user.{" "}
+              Im a new user.
             </Text>
-            <Link
+            <Button
               _text={{
-                color: "indigo.500",
-                fontWeight: "medium",
-                fontSize: "sm",
+                color: 'indigo.500',
+                fontWeight: 'medium',
+                fontSize: 'sm',
               }}
-              href="#"
             >
               Sign Up
-            </Link>
+            </Button>
           </HStack>
           {/* {(props.error || error) && (
             <Alert severity="error" onClick={() => setError(null)}>
@@ -143,7 +123,6 @@ const Login = ({ navigation }) => {
     </View>
   )
 }
-
 
 Login.propTypes = {
   navigation: PropTypes.shape({

@@ -58,7 +58,7 @@ export const HomeNavigator = () => (
         headerTitle: () => <HeaderTitle />,
       })}
     />
-        <Stack.Screen
+    <Stack.Screen
       name="Login"
       component={Login}
       options={{

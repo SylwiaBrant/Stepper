@@ -1,11 +1,13 @@
 const colors = {
-  white: "#fff",
+  white: '#fff',
   darkPurple: '#231d54',
   purple: '#8100ff',
   lightPurple: '#9388db',
   lightGrayPurple: '#f7f7fb',
   pink: '#ff3d69',
   gray: '#797777',
+  lightBlue: '#87cefa',
+  darkSlateBlue: '#483d8b',
 }
 
 export default colors

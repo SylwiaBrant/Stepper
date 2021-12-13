@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
 import {
   StyleSheet, Text, View, StatusBar,
-} from 'react-native';
-import Button from 'components/Button';
-import { colors } from 'theme';
-import { useSelector, useDispatch } from 'react-redux';
-
+} from 'react-native'
+import Button from 'components/Button'
+import { colors } from 'theme'
+import { useSelector } from 'react-redux'
 
 const styles = StyleSheet.create({
   root: {
@@ -23,12 +22,13 @@ const styles = StyleSheet.create({
 })
 
 const Home = ({ navigation }) => {
-  const { isLoggedIn } = useSelector(state => state.auth);
+  const { isLoggedIn } = useSelector((state) => state.auth)
 
   useEffect(() => {
     if (!isLoggedIn) {
-      // history.push("/counter");
-      console.log("Navigating to Login from Home. is logged in state: " + isLoggedIn);
+      console.log(
+        `Navigating to Login from Home. is logged in state: ${isLoggedIn}`,
+      )
       navigation.navigate('Login', { from: 'Home' })
     }
   }, [])

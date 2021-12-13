@@ -19,7 +19,7 @@ const authSlice = createSlice({
   },
 })
 
-//export const { action } = appSlice
+// export const { action } = appSlice
 export const { logIn, register } = authSlice.actions
 
 export default authSlice.reducer
