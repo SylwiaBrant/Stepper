@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import {
   StyleSheet, View, Text, Image,
@@ -59,12 +59,15 @@ const styles = StyleSheet.create({
 
 const Profile = ({ navigation }) => {
   const { isLoggedIn } = useSelector((state) => state.auth)
-  if (isLoggedIn) {
-    console.log(
-      `Navigating to Login from Profile. is logged in state: ${isLoggedIn}`,
-    )
-    navigation.navigate('Login', { from: 'Profile' })
-  }
+  useEffect(() => {
+    if (isLoggedIn) {
+      console.log(
+        `Navigating to Login from Profile. is logged in state: ${isLoggedIn}`,
+      )
+      navigation.navigate('Login', { from: 'Profile' })
+    }
+  }, [])
+
   return (
     <View style={styles.root}>
       <View
