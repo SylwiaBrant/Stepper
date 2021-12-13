@@ -84,13 +84,13 @@ const Profile = ({ navigation }) => {
           <View flexDirection="column" alignItems="center">
             <FontIcon name="ruler" color={colors.white} size={20} solid />
             <Text style={{ fontSize: 15, color: colors.white }}>
-              Waga: 85kg
+              Weight: 85kg
             </Text>
           </View>
           <View flexDirection="column" alignItems="center">
             <FontIcon name="weight" color={colors.white} size={20} solid />
             <Text style={{ fontSize: 15, color: colors.white }}>
-              Wzrost: 1,78 m{' '}
+              Height: 1,78 m{' '}
             </Text>
           </View>
         </View>
