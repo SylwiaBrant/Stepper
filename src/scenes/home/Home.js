@@ -25,7 +25,7 @@ const Home = ({ navigation }) => {
   const { isLoggedIn } = useSelector((state) => state.auth)
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (isLoggedIn) {
       console.log(
         `Navigating to Login from Home. is logged in state: ${isLoggedIn}`,
       )

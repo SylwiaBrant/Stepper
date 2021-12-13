@@ -63,7 +63,7 @@ const Profile = ({ navigation }) => {
     console.log(
       `Navigating to Login from Profile. is logged in state: ${isLoggedIn}`,
     )
-    navigation.navigate('Login', { from: 'Home' })
+    navigation.navigate('Login', { from: 'Profile' })
   }
   return (
     <View style={styles.root}>
