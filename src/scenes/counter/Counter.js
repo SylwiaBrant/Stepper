@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
-import { StyleSheet, View, StatusBar } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { colors } from 'theme'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { Pedometer } from 'expo-sensors'
 import {
-  Text, Button, Spacer, Heading, VStack, useToast,
+  Text, Button, Heading, VStack, useToast,
 } from 'native-base'
+import Timer from 'components/Timer'
 
 const styles = StyleSheet.create({
   root: {
@@ -29,8 +30,28 @@ const Counter = ({ navigation }) => {
   const [isActive, setActive] = useState(false)
   const [currentStepCount, setCurrentStepCount] = useState(0)
   const [subscription, setSubscription] = useState(null)
+  const [permissionsGranted, setPermissions] = useState(false)
 
   const toast = useToast()
+
+  async function askForPermissions() {
+    try {
+      await Pedometer.getPermissionsAsync()
+      toast.show({
+        title: 'Successfully connected',
+        status: 'success',
+        description: 'Permissions granted.',
+      })
+    } catch (err) {
+      console.log(err)
+      toast.show({
+        title: 'Error',
+        status: 'alert',
+        description: "Can't get permissions to use pedometer",
+      })
+    }
+    setPermissions(true)
+  }
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -39,7 +60,19 @@ const Counter = ({ navigation }) => {
       )
       navigation.navigate('Login', { from: 'Counter' })
     }
+    return () => {
+      if (subscription) {
+        subscription.remove()
+        setSubscription(null)
+      }
+    }
   }, [])
+
+  useEffect(() => {
+    if (!permissionsGranted) {
+      askForPermissions()
+    }
+  }, [permissionsGranted])
 
   const isPedometerAvailable = () => {
     Pedometer.isAvailableAsync().then(
@@ -60,7 +93,7 @@ const Counter = ({ navigation }) => {
     const subs = Pedometer.watchStepCount((result) => {
       setCurrentStepCount(result.steps)
     })
-    if (isPedometerAvailable) {
+    if (!isPedometerAvailable) {
       toast.show({
         title: 'Unavailable',
         status: 'warning',
@@ -107,50 +140,40 @@ const Counter = ({ navigation }) => {
         <Heading textAlign="center" size="md">
           Count your steps
         </Heading>
-        {isActive ? (
-          <Button
-            width="50%"
+        <Text color="coolGray.800" fontWeight="bold" fontSize="6xl">
+          {currentStepCount}
+        </Text>
+        <Timer />
+        {!isActive && currentStepCount !== 0 ? (
+          <Button.Group
+            mx={{
+              base: 'auto',
+              md: 100,
+            }}
             size="md"
-            colorScheme="primary"
-            onPress={onClickCancel}
           >
-            STOP
-          </Button>
+            <Button
+              width="40%"
+              colorScheme="info"
+              variant="outline"
+              onPress={onClickReset}
+            >
+              RESET
+            </Button>
+            <Button width="40%" colorScheme="info" onPress={onClickSave}>
+              SAVE
+            </Button>
+          </Button.Group>
         ) : (
           <Button
             width="50%"
             size="md"
             colorScheme="primary"
-            onPress={onClickStart}
+            onPress={isActive ? onClickCancel : onClickStart}
           >
-            START
+            {isActive ? 'STOP' : 'START'}
           </Button>
         )}
-
-        <Spacer />
-        <StatusBar barStyle="light-content" />
-        <Text color="coolGray.800" fontWeight="bold" fontSize="4xl">
-          {currentStepCount}
-        </Text>
-        <Button.Group
-          mx={{
-            base: 'auto',
-            md: 100,
-          }}
-          size="md"
-        >
-          <Button
-            width="40%"
-            colorScheme="info"
-            variant="outline"
-            onPress={onClickReset}
-          >
-            RESET
-          </Button>
-          <Button width="40%" colorScheme="info" onPress={onClickSave}>
-            SAVE
-          </Button>
-        </Button.Group>
       </VStack>
     </View>
   )
