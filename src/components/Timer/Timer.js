@@ -2,18 +2,38 @@ import React, { useState, useEffect } from 'react'
 import { Text, View } from 'react-native'
 
 const Timer = () => {
-  const [seconds, setSeconds] = useState(0)
+  const [time, setTime] = useState({ hour: 0, min: 0, sec: 0 })
   useEffect(() => {
-    const countie = 0
+    // let countie = 0
     setInterval(() => {
-      setSeconds(countie + 1)
-      console.log('1 sec.')
+      if (time.sec !== 59) {
+        setTime({
+          sec: (time.sec += 1),
+          min: time.min,
+          hour: time.hour,
+        })
+      } else if (time.min !== 59) {
+        setTime({
+          sec: 0,
+          min: (time.min += 1),
+          hour: time.hour,
+        })
+      } else {
+        setTime({
+          sec: 0,
+          min: 0,
+          hour: (time.hour += 1),
+        })
+      }
+      console.log(time.sec + time.min + time.hour)
     }, 1000)
   }, [])
 
   return (
     <View>
-      <Text>{seconds}</Text>
+      <Text>
+        {time.hour} | {time.min} | {time.sec}
+      </Text>
     </View>
   )
 }
