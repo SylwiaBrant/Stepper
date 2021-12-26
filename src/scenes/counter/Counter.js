@@ -8,7 +8,6 @@ import { Pedometer } from 'expo-sensors'
 import {
   Text, Button, Heading, VStack, useToast,
 } from 'native-base'
-import Timer from 'components/Timer'
 
 const styles = StyleSheet.create({
   root: {
@@ -24,24 +23,29 @@ const styles = StyleSheet.create({
   },
 })
 
+const formatTimeElapsed = (timeElapsedx) => {
+  const getSeconds = `0${timeElapsedx % 60}`.slice(-2)
+  const minutes = `${Math.floor(timeElapsedx / 60)}`
+  const getMinutes = `0${minutes % 60}`.slice(-2)
+  const getHours = `0${Math.floor(timeElapsedx / 3600)}`.slice(-2)
+
+  return `${getHours} : ${getMinutes} : ${getSeconds}`
+}
+
 const Counter = ({ navigation }) => {
   const { isLoggedIn } = useSelector((state) => state.auth)
   const [isAvailable, setAvailable] = useState(false)
-  const [isActive, setActive] = useState(false)
+  const [isActive, setIsActive] = useState(false)
   const [currentStepCount, setCurrentStepCount] = useState(0)
   const [subscription, setSubscription] = useState(null)
   const [permissionsGranted, setPermissions] = useState(false)
+  const [timeElapsed, setTimeElapsed] = useState(0)
 
   const toast = useToast()
 
   async function askForPermissions() {
     try {
       await Pedometer.getPermissionsAsync()
-      toast.show({
-        title: 'Successfully connected',
-        status: 'success',
-        description: 'Permissions granted.',
-      })
     } catch (err) {
       console.log(err)
       toast.show({
@@ -74,6 +78,21 @@ const Counter = ({ navigation }) => {
     }
   }, [permissionsGranted])
 
+  useEffect(() => {
+    let interval = null
+
+    if (isActive !== false) {
+      interval = setInterval(() => {
+        setTimeElapsed(timeElapsed + 1)
+      }, 1000)
+    } else {
+      clearInterval(interval)
+    }
+    return () => {
+      clearInterval(interval)
+    }
+  }, [isActive])
+
   const isPedometerAvailable = () => {
     Pedometer.isAvailableAsync().then(
       (result) => {
@@ -101,14 +120,14 @@ const Counter = ({ navigation }) => {
       })
     }
     setSubscription(subs)
-    setActive(true)
+    setIsActive(true)
   }
 
   const onClickCancel = () => {
+    setIsActive(false)
     console.log(subscription)
     subscription.remove()
     setSubscription(null)
-    setActive(false)
   }
 
   const onClickSave = () => {
@@ -116,6 +135,7 @@ const Counter = ({ navigation }) => {
   }
 
   const onClickReset = () => {
+    setTimeElapsed(0)
     setCurrentStepCount(0)
   }
 
@@ -143,8 +163,8 @@ const Counter = ({ navigation }) => {
         <Text color="coolGray.800" fontWeight="bold" fontSize="6xl">
           {currentStepCount}
         </Text>
-        <Timer />
-        {!isActive && currentStepCount !== 0 ? (
+        <Text>{formatTimeElapsed(timeElapsed)}</Text>
+        {!isActive && timeElapsed !== 0 ? (
           <Button.Group
             mx={{
               base: 'auto',
