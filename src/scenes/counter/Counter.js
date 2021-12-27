@@ -6,20 +6,35 @@ import { colors } from 'theme'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { Pedometer } from 'expo-sensors'
 import {
-  Text, Button, Heading, VStack, useToast,
+  Text, Button, VStack, useToast,
 } from 'native-base'
+import PulseAnimation from 'components/PulseAnimation'
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     backgroundColor: colors.lightGrayPurple,
   },
   title: {
     fontSize: 24,
     marginBottom: 20,
+  },
+  stopwatchBox: {
+    backgroundColor: colors.darkSlateBlue,
+    paddingVertical: 8,
+    paddingTop: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    padding: 10,
+    zIndex: 20, // ios
+    elevation: 20, // android
+  },
+  stopwatchBoxText: {
+    fontSize: 20,
+    color: colors.white,
   },
 })
 
@@ -96,6 +111,13 @@ const Counter = ({ navigation }) => {
   const isPedometerAvailable = () => {
     Pedometer.isAvailableAsync().then(
       (result) => {
+        if (!result) {
+          toast.show({
+            title: 'Error',
+            status: 'alert',
+            description: 'Pedometer is not available on this device',
+          })
+        }
         console.log(`Setting as: ${result}`)
         setAvailable(result)
         return result
@@ -103,6 +125,11 @@ const Counter = ({ navigation }) => {
       (error) => {
         console.log(`Setting as: ${false} caught error: ${error}`)
         setAvailable(false)
+        toast.show({
+          title: 'Error',
+          status: 'alert',
+          description: 'Encountered error, while preparing pedometer',
+        })
         return false
       },
     )
@@ -156,14 +183,16 @@ const Counter = ({ navigation }) => {
   }
   return (
     <View style={styles.root}>
-      <VStack space={4} w="100%" px="3" alignItems="center">
-        <Heading textAlign="center" size="md">
-          Count your steps
-        </Heading>
-        <Text color="coolGray.800" fontWeight="bold" fontSize="6xl">
+      <VStack space={10} w="100%" px="3" alignItems="center">
+        <Text color="coolGray.800" fontSize="8xl">
           {currentStepCount}
         </Text>
-        <Text>{formatTimeElapsed(timeElapsed)}</Text>
+        <View style={styles.stopwatchBox}>
+          <Text style={styles.stopwatchBoxText}>
+            {formatTimeElapsed(timeElapsed)}
+          </Text>
+        </View>
+        {isActive && <PulseAnimation />}
         {!isActive && timeElapsed !== 0 ? (
           <Button.Group
             mx={{
