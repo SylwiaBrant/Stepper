@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { StyleSheet, View } from 'react-native'
 import { colors } from 'theme'
-import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { Pedometer } from 'expo-sensors'
 import {
   Text, Button, VStack, useToast,
@@ -49,7 +48,6 @@ const formatTimeElapsed = (timeElapsedx) => {
 
 const Counter = ({ navigation }) => {
   const { isLoggedIn } = useSelector((state) => state.auth)
-  const [isAvailable, setAvailable] = useState(false)
   const [isActive, setIsActive] = useState(false)
   const [currentStepCount, setCurrentStepCount] = useState(0)
   const [subscription, setSubscription] = useState(null)
@@ -121,12 +119,10 @@ const Counter = ({ navigation }) => {
           })
         }
         console.log(`Setting as: ${result}`)
-        setAvailable(result)
         return result
       },
       (error) => {
         console.log(`Setting as: ${false} caught error: ${error}`)
-        setAvailable(false)
         toast.show({
           title: 'Error',
           status: 'alert',
@@ -166,22 +162,6 @@ const Counter = ({ navigation }) => {
   const onClickReset = () => {
     setTimeElapsed(0)
     setCurrentStepCount(0)
-  }
-
-  if (isAvailable) {
-    return (
-      <View style={styles.root}>
-        <VStack space={2} alignItems="center">
-          <FontIcon
-            name="exclamation-triangle"
-            color="#9f1239"
-            size={80}
-            solid
-          />
-          <Text marginTop="40px">Pedometer is unavailable on this device.</Text>
-        </VStack>
-      </View>
-    )
   }
   return (
     <View style={styles.root}>
