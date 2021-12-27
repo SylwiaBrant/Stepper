@@ -98,7 +98,9 @@ const Counter = ({ navigation }) => {
 
     if (isActive !== false) {
       interval = setInterval(() => {
-        setTimeElapsed(timeElapsed + 1)
+        /* eslint-disable */
+        setTimeElapsed((timeElapsed) => timeElapsed + 1)
+        /* eslint-enable */
       }, 1000)
     } else {
       clearInterval(interval)
