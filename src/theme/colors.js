@@ -8,6 +8,7 @@ const colors = {
   gray: '#797777',
   lightBlue: '#87cefa',
   darkSlateBlue: '#483d8b',
+  lightSteelBlue: '#b0c4de',
 }
 
 export default colors
