@@ -17,7 +17,7 @@ const App = () => {
   // require('dotenv').config();
   // console.log('App');
   // ClientRequest.LoginClient('2', '2');
-  ClientRequest.GetClientById(2)
+  console.log(ClientRequest.GetClientById(2))
   // ClientRequest.AddNewClient({
   //   Login: 'Damian', // string
   //   Password: 'Damian', // string
@@ -38,8 +38,8 @@ const App = () => {
   //   Birthday: '2099-01-01', // date
   //   Gender: 'Men', // string
   // });
-
-  WorkoutResultsRequest.GetWorkoutResults(2)
+  console.log('Returned response')
+  console.log(WorkoutResultsRequest.GetWorkoutResults(2))
   // WorkoutResultsRequest.CreateWorkoutResult({
   //   Type: "Walk",
   //   StepAmmount: 210000,
