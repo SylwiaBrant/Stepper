@@ -1,6 +1,6 @@
-import { GetWorkoutResults, CreateWorkoutResult } from './WorkoutResultsRequest'
+import { getWorkoutResults, createWorkoutResult } from './WorkoutResultsRequest'
 
 export default {
-  GetWorkoutResults,
-  CreateWorkoutResult,
+  getWorkoutResults,
+  createWorkoutResult,
 }

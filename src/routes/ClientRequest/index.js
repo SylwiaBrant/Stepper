@@ -1,13 +1,13 @@
 import {
-  LoginClient,
-  GetClientById,
-  AddNewClient,
-  UpdateClient,
+  loginClient,
+  getClientById,
+  addNewClient,
+  updateClient,
 } from './ClientRequest'
 
 export default {
-  LoginClient,
-  GetClientById,
-  AddNewClient,
-  UpdateClient,
+  loginClient,
+  getClientById,
+  addNewClient,
+  updateClient,
 }
