@@ -1,87 +1,66 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
 
 const loginClientEndpoint = 'http://localhost:8090/loginClient'
 const getClientByIdEndpoint = 'http://localhost:8090/getClientById/'
 const addNewClientEndpoint = 'http://localhost:8090/addNewClient'
 const updateClientEndpoint = 'http://localhost:8090/updateClient'
 
-const LoginClient = (login, password) => {
-  const [result, setResult] = useState(undefined)
+const loginClient = async (login, password) => {
   const body = {
     login,
     password,
   }
-  useEffect(() => {
-    const fetchData = async () => {
-      await axios
-        .post(loginClientEndpoint, body)
-        .then((response) => {
-          setResult(response.data)
-        })
-        .catch((errors) => {
-          setResult(errors)
-        })
-    }
-    fetchData()
-  }, [])
+  let result
+  await axios
+    .post(loginClientEndpoint, body)
+    .then((response) => {
+      result = response.data
+    })
+    .catch((errors) => {
+      result = errors.message
+    })
   return result
 }
 
-const GetClientById = (id) => {
-  const [result, setResult] = useState(undefined)
-  useEffect(() => {
-    const fetchData = async () => {
-      await axios
-        .get(getClientByIdEndpoint + id)
-        .then((response) => {
-          setResult(response.data)
-        })
-        .catch((errors) => {
-          setResult(errors)
-        })
-    }
-    fetchData()
-  }, [])
+const getClientById = async (id) => {
+  let result
+  await axios
+    .get(getClientByIdEndpoint + id)
+    .then((response) => {
+      result = response.data
+    })
+    .catch((errors) => {
+      result = errors.message
+    })
   return result
 }
 
-const AddNewClient = (newClient) => {
-  const [result, setResult] = useState(undefined)
-  useEffect(() => {
-    const fetchData = async () => {
-      await axios
-        .post(addNewClientEndpoint, newClient)
-        .then((response) => {
-          setResult(response.data)
-        })
-        .catch((errors) => {
-          setResult(errors)
-        })
-    }
-    fetchData()
-  }, [])
+const addNewClient = async (newClient) => {
+  let result
+  await axios
+    .post(addNewClientEndpoint, newClient)
+    .then((response) => {
+      result = response.data
+    })
+    .catch((errors) => {
+      result = errors.message
+    })
   return result
 }
 
-const UpdateClient = (newClient) => {
-  const [result, setResult] = useState(undefined)
-  useEffect(() => {
-    const fetchData = async () => {
-      await axios
-        .post(updateClientEndpoint, newClient)
-        .then((response) => {
-          setResult(response.data)
-        })
-        .catch((errors) => {
-          setResult(errors)
-        })
-    }
-    fetchData()
-  }, [])
+const updateClient = async (newClient) => {
+  let result
+  await axios
+    .post(updateClientEndpoint, newClient)
+    .then((response) => {
+      result = response.data
+    })
+    .catch((errors) => {
+      result = errors.message
+    })
   return result
 }
 
 export {
-  LoginClient, GetClientById, AddNewClient, UpdateClient,
+  loginClient, getClientById, addNewClient, updateClient,
 }
