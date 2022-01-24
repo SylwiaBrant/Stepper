@@ -8,6 +8,8 @@ import {
   Text, Button, VStack, useToast,
 } from 'native-base'
 import PulseAnimation from 'components/PulseAnimation'
+import DateTime from 'utils/datetime'
+import WorkoutResultsRequest from '../../routes/WorkoutResultsRequest'
 
 const styles = StyleSheet.create({
   root: {
@@ -37,22 +39,16 @@ const styles = StyleSheet.create({
   },
 })
 
-const formatTimeElapsed = (timeElapsedx) => {
-  const getSeconds = `0${timeElapsedx % 60}`.slice(-2)
-  const minutes = `${Math.floor(timeElapsedx / 60)}`
-  const getMinutes = `0${minutes % 60}`.slice(-2)
-  const getHours = `0${Math.floor(timeElapsedx / 3600)}`.slice(-2)
-
-  return `${getHours} : ${getMinutes} : ${getSeconds}`
-}
-
 const Counter = ({ navigation }) => {
   const { isLoggedIn } = useSelector((state) => state.auth)
+  // const { clientId } = useSelector((state) => state.auth.clientId)
+  const clientId = 1
   const [isActive, setIsActive] = useState(false)
   const [currentStepCount, setCurrentStepCount] = useState(0)
   const [subscription, setSubscription] = useState(null)
   const [permissionsGranted, setPermissions] = useState(false)
   const [timeElapsed, setTimeElapsed] = useState(0)
+  const [startingDate, setStartingDate] = useState('')
 
   const toast = useToast()
 
@@ -146,17 +142,30 @@ const Counter = ({ navigation }) => {
     }
     setSubscription(subs)
     setIsActive(true)
+    setStartingDate(new Date())
+    console.log(startingDate)
   }
 
   const onClickCancel = () => {
     setIsActive(false)
-    console.log(subscription)
     subscription.remove()
     setSubscription(null)
   }
 
-  const onClickSave = () => {
-    console.log('Calling POST on API')
+  const onClickSave = async () => {
+    const newWorkoutResult = {
+      Typ: 'Walk',
+      StepAmount: currentStepCount,
+      StartDate: DateTime.formatDate(startingDate),
+      EndDate: DateTime.formatDate(
+        new Date(startingDate.getTime() + timeElapsed * 1000),
+      ),
+      ClientId: clientId,
+    }
+    const result = WorkoutResultsRequest.createWorkoutResult(newWorkoutResult)
+    if (result.status !== 200) {
+      console.log('oopsie woopsie')
+    }
   }
 
   const onClickReset = () => {
@@ -171,7 +180,7 @@ const Counter = ({ navigation }) => {
         </Text>
         <View style={styles.stopwatchBox}>
           <Text style={styles.stopwatchBoxText}>
-            {formatTimeElapsed(timeElapsed)}
+            {DateTime.formatTimeElapsed(timeElapsed)}
           </Text>
         </View>
         {isActive && <PulseAnimation />}
