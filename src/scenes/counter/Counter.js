@@ -40,9 +40,7 @@ const styles = StyleSheet.create({
 })
 
 const Counter = ({ navigation }) => {
-  const { isLoggedIn } = useSelector((state) => state.auth)
-  // const { clientId } = useSelector((state) => state.auth.clientId)
-  const clientId = 1
+  const { isLoggedIn, userId } = useSelector((state) => state.auth)
   const [isActive, setIsActive] = useState(false)
   const [currentStepCount, setCurrentStepCount] = useState(0)
   const [subscription, setSubscription] = useState(null)
@@ -109,12 +107,11 @@ const Counter = ({ navigation }) => {
       (result) => {
         if (!result) {
           toast.show({
-            title: 'Error',
-            status: 'alert',
-            description: 'Pedometer is not available on this device',
+            title: 'Unavailable',
+            status: 'warning',
+            description: 'Pedometer is not compatible with this device.',
           })
         }
-        console.log(`Setting as: ${result}`)
         return result
       },
       (error) => {
@@ -133,13 +130,7 @@ const Counter = ({ navigation }) => {
     const subs = Pedometer.watchStepCount((result) => {
       setCurrentStepCount(result.steps)
     })
-    if (!isPedometerAvailable) {
-      toast.show({
-        title: 'Unavailable',
-        status: 'warning',
-        description: 'Pedometer is not compatible with this device.',
-      })
-    }
+    isPedometerAvailable()
     setSubscription(subs)
     setIsActive(true)
     setStartingDate(new Date())
@@ -160,11 +151,15 @@ const Counter = ({ navigation }) => {
       EndDate: DateTime.formatDate(
         new Date(startingDate.getTime() + timeElapsed * 1000),
       ),
-      ClientId: clientId,
+      ClientId: userId,
     }
     const result = WorkoutResultsRequest.createWorkoutResult(newWorkoutResult)
     if (result.status !== 200) {
-      console.log('oopsie woopsie')
+      toast.show({
+        title: 'Error',
+        status: 'alert',
+        description: 'Encountered error, while saving result',
+      })
     }
   }
 
