@@ -5,16 +5,16 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: {
     isLoggedIn: false,
-    userId: 0,
+    user: {},
   },
   reducers: {
     logIn: (state, { payload }) => {
       state.isLoggedIn = payload.isLoggedIn
-      state.userId = payload.userId
+      state.user = payload.user
     },
     register: (state, { payload }) => {
       state.isLoggedIn = payload.isLoggedIn
-      state.userId = payload.userId
+      state.user = payload.user
     },
   },
 })

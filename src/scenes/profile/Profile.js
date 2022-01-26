@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import {
   StyleSheet, View, Text, Image,
 } from 'react-native'
+import { useToast } from 'native-base'
 import { colors } from 'theme'
 import { useSelector } from 'react-redux'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
+import DateTime from 'utils/datetime'
+import WorkoutResultsRequest from '../../routes/WorkoutResultsRequest'
 
 const styles = StyleSheet.create({
   root: {
@@ -57,14 +60,27 @@ const styles = StyleSheet.create({
   },
 })
 
-const Profile = ({ navigation }) => {
-  const { isLoggedIn } = useSelector((state) => state.auth)
+const Profile = () => {
+  const { user } = useSelector((state) => state.auth.user)
+  const [workoutResult, setWorkoutResult] = useState('NULL')
+  const toast = useToast()
+
+  const fetchUserInfo = async () => {
+    const result = await WorkoutResultsRequest.getWorkoutResults(0)
+    if (result instanceof String) {
+      toast.show({
+        title: 'Error',
+        status: 'alert',
+        description: 'Encountered error, while saving result',
+      })
+    } else {
+      setWorkoutResult(result)
+    }
+  }
+
   useEffect(() => {
-    if (isLoggedIn) {
-      console.log(
-        `Navigating to Login from Profile. is logged in state: ${isLoggedIn}`,
-      )
-      navigation.navigate('Login', { from: 'Profile' })
+    if (workoutResult === 'NULL') {
+      fetchUserInfo()
     }
   }, [])
 
@@ -81,19 +97,35 @@ const Profile = ({ navigation }) => {
           source={require('../../../assets/images/blue-bg.png')}
         />
         <View alignItems="center">
-          <Text style={{ fontSize: 40, color: colors.white }}>Lukas09</Text>
+          <Text style={{ fontSize: 40, color: colors.white }}>
+            {user.Login}
+          </Text>
         </View>
         <View flexDirection="row" justifyContent="space-evenly">
           <View flexDirection="column" alignItems="center">
-            <FontIcon name="ruler" color={colors.white} size={20} solid />
+            <FontIcon name="transgender" color={colors.white} size={20} solid />
             <Text style={{ fontSize: 15, color: colors.white }}>
-              Weight: 85kg
+              Gender: {user.Gender}
             </Text>
           </View>
           <View flexDirection="column" alignItems="center">
+            <FontIcon name="calendar" color={colors.white} size={20} solid />
+            <Text style={{ fontSize: 15, color: colors.white }}>
+              Age: {user.Birthday}
+            </Text>
+          </View>
+        </View>
+        <View flexDirection="row" justifyContent="space-evenly">
+          <View flexDirection="column" alignItems="center">
             <FontIcon name="weight" color={colors.white} size={20} solid />
             <Text style={{ fontSize: 15, color: colors.white }}>
-              Height: 1,78 m{' '}
+              Weight: {user.Width} kg
+            </Text>
+          </View>
+          <View flexDirection="column" alignItems="center">
+            <FontIcon name="ruler" color={colors.white} size={20} solid />
+            <Text style={{ fontSize: 15, color: colors.white }}>
+              Height: {user.Height} m{' '}
             </Text>
           </View>
         </View>
@@ -122,7 +154,13 @@ const Profile = ({ navigation }) => {
             <FontIcon name="clock" color={colors.lightBlue} size={20} regular />
             <Text style={styles.badgeText}>Avg. time:</Text>
           </View>
-          <Text style={[styles.badgeText, styles.outcome]}>21 min.</Text>
+          <Text style={[styles.badgeText, styles.outcome]}>
+            {DateTime.formatTimeElapsed(
+              (new Date(workoutResult.EndDate).getTime()
+                - new Date(workoutResult.StartDate).getTime())
+                / 1000,
+            )}
+          </Text>
         </View>
         <View
           style={styles.badge}
@@ -139,7 +177,9 @@ const Profile = ({ navigation }) => {
             />
             <Text style={styles.badgeText}>Avg. steps:</Text>
           </View>
-          <Text style={[styles.badgeText, styles.outcome]}>6571</Text>
+          <Text style={[styles.badgeText, styles.outcome]}>
+            {workoutResult.StepAmount}
+          </Text>
         </View>
         <View
           style={styles.badge}
@@ -151,7 +191,9 @@ const Profile = ({ navigation }) => {
             <FontIcon name="running" color={colors.lightBlue} size={20} solid />
             <Text style={styles.badgeText}>Fav activity:</Text>
           </View>
-          <Text style={[styles.badgeText, styles.outcome]}>Walking</Text>
+          <Text style={[styles.badgeText, styles.outcome]}>
+            {workoutResult.Type}
+          </Text>
         </View>
       </View>
     </View>
