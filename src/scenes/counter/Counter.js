@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
   },
 })
 
-const Counter = ({ navigation }) => {
-  const { isLoggedIn, userId } = useSelector((state) => state.auth)
+const Counter = () => {
+  const { user } = useSelector((state) => state.auth.user)
   const [isActive, setIsActive] = useState(false)
   const [currentStepCount, setCurrentStepCount] = useState(0)
   const [subscription, setSubscription] = useState(null)
@@ -64,20 +64,15 @@ const Counter = ({ navigation }) => {
     setPermissions(true)
   }
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      console.log(
-        `Navigating to Login from Profile. is logged in state: ${isLoggedIn}`,
-      )
-      navigation.navigate('Login', { from: 'Counter' })
-    }
-    return () => {
+  useEffect(
+    () => () => {
       if (subscription) {
         subscription.remove()
         setSubscription(null)
       }
-    }
-  }, [])
+    },
+    [],
+  )
 
   useEffect(() => {
     if (!permissionsGranted) {
@@ -115,11 +110,10 @@ const Counter = ({ navigation }) => {
         return result
       },
       (error) => {
-        console.log(`Setting as: ${false} caught error: ${error}`)
         toast.show({
           title: 'Error',
           status: 'alert',
-          description: 'Encountered error, while preparing pedometer',
+          description: `Encountered error, while preparing pedometer${error}`,
         })
         return false
       },
@@ -151,10 +145,12 @@ const Counter = ({ navigation }) => {
       EndDate: DateTime.formatDate(
         new Date(startingDate.getTime() + timeElapsed * 1000),
       ),
-      ClientId: userId,
+      ClientId: user.Id,
     }
-    const result = WorkoutResultsRequest.createWorkoutResult(newWorkoutResult)
-    if (result.status !== 200) {
+    const result = await WorkoutResultsRequest.createWorkoutResult(
+      newWorkoutResult,
+    )
+    if (result instanceof String) {
       toast.show({
         title: 'Error',
         status: 'alert',
