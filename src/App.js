@@ -8,7 +8,8 @@ import { NativeBaseProvider } from 'native-base'
 // assets
 import { imageAssets } from 'theme/images'
 import { fontAssets } from 'theme/fonts'
-import Router from './routes'
+import { NavigationContainer } from '@react-navigation/native'
+import AppStackNavigator from './routes/navigation/stacks'
 
 const App = () => {
   const [didLoad, setDidLoad] = useState(false)
@@ -30,7 +31,9 @@ const App = () => {
   return (
     <NativeBaseProvider>
       <Provider store={store}>
-        <Router />
+        <NavigationContainer>
+          <AppStackNavigator />
+        </NavigationContainer>
       </Provider>
     </NativeBaseProvider>
   )

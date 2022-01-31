@@ -9,6 +9,8 @@ const colors = {
   lightBlue: '#87cefa',
   darkSlateBlue: '#483d8b',
   lightSteelBlue: '#b0c4de',
+  lightcyan: '#e0ffff',
+  aquamarine: '#7fffd4',
 }
 
 export default colors
