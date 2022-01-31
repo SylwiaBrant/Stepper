@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import { StyleSheet, View } from 'react-native'
 import {
   Box,
-  Heading,
-  VStack,
-  FormControl,
-  Input,
   Button,
+  FormControl,
+  Heading,
+  Input,
   useToast,
+  VStack,
 } from 'native-base'
 import { colors } from 'theme'
 import ClientRequest from '../../routes/ClientRequest'
@@ -131,6 +131,7 @@ const Registration = ({ navigation }) => {
                 Login: login,
                 Password: password,
               }
+              navigation.navigate('Height')
 
               const response = await ClientRequest.addNewClient(client)
               if (
