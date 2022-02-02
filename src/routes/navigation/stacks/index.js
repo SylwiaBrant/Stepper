@@ -1,3 +1,3 @@
-import AppStackNavigator from './Stacks'
+import { HomeNavigator, ProfileNavigator, CounterNavigator, AuthStackScreen } from './Stacks'
 
-export default AppStackNavigator
+export { HomeNavigator, ProfileNavigator, CounterNavigator, AuthStackScreen }

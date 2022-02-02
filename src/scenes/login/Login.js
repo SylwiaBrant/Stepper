@@ -36,6 +36,7 @@ const Login = ({ navigation }) => {
 
   const handleLogin = () => {
     console.log('Logging...')
+    //auth.state.
   }
   return (
     <View style={styles.root}>

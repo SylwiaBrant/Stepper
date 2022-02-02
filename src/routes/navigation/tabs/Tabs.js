@@ -3,15 +3,12 @@ import { View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { colors } from 'theme'
-import { NavigationContainer } from '@react-navigation/native'
-import Home from '../../../scenes/home'
-import Profile from '../../../scenes/profile'
-import Counter from '../../../scenes/counter'
+
+import { HomeNavigator, ProfileNavigator, CounterNavigator } from '../stacks'
 
 const Tab = createBottomTabNavigator()
 
 const TabNavigator = () => (
-  <NavigationContainer>
     <Tab.Navigator
       screenOptions={({ route }) => ({
         // eslint-disable-next-line react/prop-types
@@ -44,15 +41,6 @@ const TabNavigator = () => (
                   solid
                 />
               )
-            case 'Login':
-              return (
-                <FontIcon
-                  name="running"
-                  color={focused ? colors.lightPurple : colors.gray}
-                  size={20}
-                  solid
-                />
-              )
             default:
               return <View />
           }
@@ -72,11 +60,10 @@ const TabNavigator = () => (
       initialRouteName="Home"
       swipeEnabled={false}
     >
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Profile" component={Profile} />
-      <Tab.Screen name="Counter" component={Counter} />
+      <Tab.Screen name="Home" component={HomeNavigator} />
+      <Tab.Screen name="Profile" component={ProfileNavigator} />
+      <Tab.Screen name="Counter" component={CounterNavigator} />
     </Tab.Navigator>
-  </NavigationContainer>
 )
 
 export default TabNavigator
