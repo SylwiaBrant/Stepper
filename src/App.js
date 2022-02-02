@@ -4,12 +4,12 @@ import { Provider } from 'react-redux'
 import store from 'utils/store'
 import 'utils/ignore'
 import { NativeBaseProvider } from 'native-base'
+import RootStackScreen from "./routes/navigation";
 
 // assets
 import { imageAssets } from 'theme/images'
 import { fontAssets } from 'theme/fonts'
-import { NavigationContainer } from '@react-navigation/native'
-import AppStackNavigator from './routes/navigation/stacks'
+
 
 const App = () => {
   const [didLoad, setDidLoad] = useState(false)
@@ -31,9 +31,7 @@ const App = () => {
   return (
     <NativeBaseProvider>
       <Provider store={store}>
-        <NavigationContainer>
-          <AppStackNavigator />
-        </NavigationContainer>
+        <RootStackScreen />
       </Provider>
     </NativeBaseProvider>
   )

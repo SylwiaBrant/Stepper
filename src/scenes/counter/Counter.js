@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const Counter = () => {
+const Counter = ({ navigation }) => { // eslint-disable-line no-unused-vars
   const { user } = useSelector((state) => state.auth.user)
   const [isActive, setIsActive] = useState(false)
   const [currentStepCount, setCurrentStepCount] = useState(0)
@@ -211,16 +211,12 @@ const Counter = () => {
 }
 
 Counter.propTypes = {
-  route: PropTypes.shape({
-    params: PropTypes.shape({ from: PropTypes.string }),
-  }),
   navigation: PropTypes.shape({
     goBack: PropTypes.func,
   }),
 }
 
 Counter.defaultProps = {
-  route: { params: { from: '' } },
   navigation: { goBack: () => null },
 }
 

@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const Profile = () => {
+const Profile = ({ navigation }) => { // eslint-disable-line no-unused-vars
   const { user } = useSelector((state) => state.auth.user)
   const [workoutResult, setWorkoutResult] = useState('NULL')
   const toast = useToast()
@@ -201,7 +201,9 @@ const Profile = () => {
 }
 
 Profile.propTypes = {
-  navigation: PropTypes.shape({ navigate: PropTypes.func }),
+  navigation: PropTypes.shape({
+    goBack: PropTypes.func,
+  }),
 }
 
 Profile.defaultProps = {
