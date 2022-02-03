@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View } from 'react-native'
-import { colors } from 'theme'
 import {
-  Box, Heading, VStack, FormControl, Input, Button,
+  Box,
+  Button,
+  FormControl,
+  Heading,
+  Input,
+  useToast,
+  VStack,
 } from 'native-base'
+import { colors } from '../../theme'
+import ClientRequest from '../../routes/ClientRequest'
 
 const styles = StyleSheet.create({
   root: {
@@ -21,22 +28,14 @@ const styles = StyleSheet.create({
 })
 
 const Login = ({ navigation }) => {
-  // const { isLoggedIn } = useSelector((state) => state.auth)
-  //
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     console.log(
-  //       `Navigating to Login from Profile - Is logged in state: ${isLoggedIn}`,
-  //     )
-  //     navigation.navigate('Home', { from: 'Login' })
-  //   }
-  // }, [isLoggedIn])
+  const [login, setLogin] = useState(undefined)
+  const [password, setPassword] = useState(undefined)
+  const toast = useToast()
 
   const handleChange = () => {}
 
   const handleLogin = () => {
     console.log('Logging...')
-    //auth.state.
   }
   return (
     <View style={styles.root}>
@@ -69,7 +68,9 @@ const Login = ({ navigation }) => {
               borderWidth={2}
               borderColor="#000000"
               backgroundColor="#ecffff"
-              onChange={handleChange}
+              onChange={(event) => {
+                setLogin(event.target.value)
+              }}
             />
           </FormControl>
           <FormControl>
@@ -80,7 +81,9 @@ const Login = ({ navigation }) => {
               borderColor="#000000"
               backgroundColor="#ecffff"
               type="password"
-              onChange={handleChange}
+              onChange={(event) => {
+                setPassword(event.target.value)
+              }}
             />
             <Button
               _text={{
@@ -90,6 +93,9 @@ const Login = ({ navigation }) => {
               colorScheme="blue"
               alignSelf="flex-end"
               mt="1"
+              onPress={() => {
+                navigation.navigate('Forgot')
+              }}
             >
               Forgot password?
             </Button>
@@ -97,9 +103,26 @@ const Login = ({ navigation }) => {
           <Button
             mt="1"
             colorScheme="indigo"
-            onSubmit={handleLogin}
             _text={{
               fontSize: 'sm',
+            }}
+            onPress={async () => {
+              const response = await ClientRequest.loginClient(login, password)
+              console.log(response)
+              if (
+                Array.isArray(response)
+                && response.length === 1
+                && Number.isInteger(response[0])
+              ) {
+                navigation.navigate('Home')
+              } else {
+                toast.show({
+                  placement: 'top',
+                  title: 'Something went wrong',
+                  description: response,
+                  status: 'alert',
+                })
+              }
             }}
           >
             Sign in
@@ -116,11 +139,6 @@ const Login = ({ navigation }) => {
           >
             Sign up
           </Button>
-          {/* {(props.error || error) && (
-            <Alert severity="error" onClick={() => setError(null)}>
-              {props.error || error}
-            </Alert>
-          )} */}
         </VStack>
       </Box>
     </View>
