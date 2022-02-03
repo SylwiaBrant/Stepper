@@ -1,16 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import Drawer from './drawer'
 import { AuthStackScreen } from './stacks'
-import { useSelector } from 'react-redux'
+import { useSelector, connect } from 'react-redux'
 
 const RootStack = createStackNavigator();
 
-const RootStackScreen = () => {
-  const { isLoggedIn } = useSelector((state) => state.auth)
-  console.log(isLoggedIn)
-return <NavigationContainer>
+const RootStackScreen = (props) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    console.log(props.isLoggedIn)
+    setIsLoggedIn(props.isLoggedIn)
+  },[props.isLoggedIn])
+
+return (<NavigationContainer>
   <RootStack.Navigator headerMode="none">
     {isLoggedIn ? (
       <RootStack.Screen
@@ -30,7 +35,14 @@ return <NavigationContainer>
       />
     )}
   </RootStack.Navigator>
-  </NavigationContainer>
+  </NavigationContainer>)
 }
 
-export default RootStackScreen
+const mapStateToProps = (state) => {
+  console.log(state)
+  return{
+    isLoggedIn: state.auth.isLoggedIn
+  }
+}
+
+export default connect(mapStateToProps, null)(RootStackScreen)

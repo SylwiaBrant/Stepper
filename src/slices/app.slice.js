@@ -1,25 +1,33 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
+import {
+  combineReducers,
+} from '@reduxjs/toolkit'
 
-const authSlice = createSlice({
-  name: 'auth',
-  initialState: {
+const initialState = [
+  {
     isLoggedIn: false,
-    userId: 0,
-  },
-  reducers: {
-    logIn: (state, { payload }) => {
-      state.isLoggedIn = payload.isLoggedIn
-      state.userId = payload.userId
-    },
-    register: (state, { payload }) => {
-      state.isLoggedIn = payload.isLoggedIn
-      state.userId = payload.userId
-    },
-  },
+    user: {},
+  }
+]
+
+export function loginUser(user) {
+  return {
+    user,
+  }
+}
+
+function authSlice(state=initialState, user) {
+  return [
+    {
+      isLoggedIn: true,
+      user: user,
+    }
+  ]
+}
+
+const reducer = combineReducers({
+  authSlice
 })
 
-// export const { action } = appSlice
-export const { logIn, register } = authSlice.actions
-
-export default authSlice.reducer
+export default reducer
