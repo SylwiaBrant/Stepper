@@ -22,9 +22,7 @@ const styles = StyleSheet.create({
 
 const handleChange = () => {}
 
-const handleSubmit = () => {}
-
-const Forgot = () => (
+const Date = ({ navigation }) => (
   <View style={styles.root}>
     <Box safeArea p="2" py="8" w="90%" maxW="290">
       <Heading
@@ -35,56 +33,41 @@ const Forgot = () => (
           color: 'warmGray.50',
         }}
       >
-        Remind your password
-      </Heading>
-      <Heading
-        mt="1"
-        _dark={{
-          color: 'warmGray.200',
-        }}
-        color="coolGray.600"
-        fontWeight="medium"
-        size="xs"
-      >
-        Enter the email address used to register your account.
+        Enter Your date of birth
       </Heading>
       <VStack space={3} mt="5">
         <FormControl>
-          <FormControl.Label>Email:</FormControl.Label>
           <Input
             borderWidth={2}
             borderColor="#000000"
             backgroundColor="#ecffff"
-            placeholder="e.g. Please enter Your email used to registration"
+            placeholder="e.g. 1998-01-01"
             onChange={handleChange}
           />
         </FormControl>
         <Button
           mt="1"
           colorScheme="indigo"
-          onSubmit={handleSubmit}
           _text={{
             fontSize: 'sm',
           }}
+          onPress={() => {
+            navigation.navigate('Gender')
+          }}
         >
-          Send email
+          Next
         </Button>
-        {/* {(props.error || error) && (
-            <Alert severity="error" onClick={() => setError(null)}>
-              {props.error || error}
-            </Alert>
-          )} */}
       </VStack>
     </Box>
   </View>
 )
-Forgot.propTypes = {
+Date.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }),
 }
-Forgot.defaultProps = {
+Date.defaultProps = {
   navigation: { navigate: () => null },
 }
 
-export default Forgot
+export default Date

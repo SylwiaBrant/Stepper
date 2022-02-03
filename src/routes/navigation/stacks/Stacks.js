@@ -8,6 +8,12 @@ import Login from '../../../scenes/login'
 import Registration from '../../../scenes/registration'
 import HeaderLeft from './HeaderLeft'
 import HeaderTitle from './HeaderTitle'
+import Forgot from '../../../scenes/forgot'
+import Height from '../../../scenes/height'
+import Weight from '../../../scenes/weight'
+import Goal from '../../../scenes/goal'
+import Date from '../../../scenes/date'
+import Gender from '../../../scenes/gender'
 
 // ------------------------------------
 // Constants
@@ -28,22 +34,19 @@ const navigationProps = {
 
 export const AuthStackScreen = () => (
   <AuthStack.Navigator>
-    <AuthStack.Screen
-      name="Login"
-      component={Login}
-    />
-    <AuthStack.Screen
-      name="Registration"
-      component={Registration}
-    />
+    <AuthStack.Screen name="Login" component={Login} />
+    <AuthStack.Screen name="Registration" component={Registration} />
+    <AuthStack.Screen name="Forgot" component={Forgot} />
+    <AuthStack.Screen name="Height" component={Height} />
+    <AuthStack.Screen name="Weight" component={Weight} />
+    <AuthStack.Screen name="Goal" component={Goal} />
+    <AuthStack.Screen name="Date" component={Date} />
+    <AuthStack.Screen name="Gender" component={Gender} />
   </AuthStack.Navigator>
 )
 
 export const HomeNavigator = () => (
-  <Stack.Navigator
-    initialRouteName="Home"
-    headerMode="screen"
-  >
+  <Stack.Navigator initialRouteName="Home" headerMode="screen">
     <Stack.Screen
       name="Home"
       component={Home}
