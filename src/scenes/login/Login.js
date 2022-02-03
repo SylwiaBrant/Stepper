@@ -32,6 +32,11 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState(undefined)
   const toast = useToast()
 
+  const handleChange = () => {}
+
+  const handleLogin = () => {
+    console.log('Logging...')
+  }
   return (
     <View style={styles.root}>
       <Box safeArea p="2" py="8" w="90%" maxW="290">

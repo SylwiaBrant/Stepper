@@ -1,3 +1,3 @@
-import Navigation from './Navigation'
+import RootStackScreen from './Navigation'
 
-export default Navigation
+export default RootStackScreen

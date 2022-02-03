@@ -8,6 +8,8 @@ import {
   Text, Button, VStack, useToast,
 } from 'native-base'
 import PulseAnimation from 'components/PulseAnimation'
+import DateTime from 'utils/datetime'
+import WorkoutResultsRequest from '../../routes/WorkoutResultsRequest'
 
 const styles = StyleSheet.create({
   root: {
@@ -37,22 +39,14 @@ const styles = StyleSheet.create({
   },
 })
 
-const formatTimeElapsed = (timeElapsedx) => {
-  const getSeconds = `0${timeElapsedx % 60}`.slice(-2)
-  const minutes = `${Math.floor(timeElapsedx / 60)}`
-  const getMinutes = `0${minutes % 60}`.slice(-2)
-  const getHours = `0${Math.floor(timeElapsedx / 3600)}`.slice(-2)
-
-  return `${getHours} : ${getMinutes} : ${getSeconds}`
-}
-
-const Counter = ({ navigation }) => {
-  const { isLoggedIn } = useSelector((state) => state.auth)
+const Counter = ({ navigation }) => { // eslint-disable-line no-unused-vars
+  const { user } = useSelector((state) => state.auth.user)
   const [isActive, setIsActive] = useState(false)
   const [currentStepCount, setCurrentStepCount] = useState(0)
   const [subscription, setSubscription] = useState(null)
   const [permissionsGranted, setPermissions] = useState(false)
   const [timeElapsed, setTimeElapsed] = useState(0)
+  const [startingDate, setStartingDate] = useState('')
 
   const toast = useToast()
 
@@ -70,20 +64,15 @@ const Counter = ({ navigation }) => {
     setPermissions(true)
   }
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      console.log(
-        `Navigating to Login from Profile. is logged in state: ${isLoggedIn}`,
-      )
-      navigation.navigate('Login', { from: 'Counter' })
-    }
-    return () => {
+  useEffect(
+    () => () => {
       if (subscription) {
         subscription.remove()
         setSubscription(null)
       }
-    }
-  }, [])
+    },
+    [],
+  )
 
   useEffect(() => {
     if (!permissionsGranted) {
@@ -113,20 +102,18 @@ const Counter = ({ navigation }) => {
       (result) => {
         if (!result) {
           toast.show({
-            title: 'Error',
-            status: 'alert',
-            description: 'Pedometer is not available on this device',
+            title: 'Unavailable',
+            status: 'warning',
+            description: 'Pedometer is not compatible with this device.',
           })
         }
-        console.log(`Setting as: ${result}`)
         return result
       },
       (error) => {
-        console.log(`Setting as: ${false} caught error: ${error}`)
         toast.show({
           title: 'Error',
           status: 'alert',
-          description: 'Encountered error, while preparing pedometer',
+          description: `Encountered error, while preparing pedometer${error}`,
         })
         return false
       },
@@ -137,26 +124,39 @@ const Counter = ({ navigation }) => {
     const subs = Pedometer.watchStepCount((result) => {
       setCurrentStepCount(result.steps)
     })
-    if (!isPedometerAvailable) {
-      toast.show({
-        title: 'Unavailable',
-        status: 'warning',
-        description: 'Pedometer is not compatible with this device.',
-      })
-    }
+    isPedometerAvailable()
     setSubscription(subs)
     setIsActive(true)
+    setStartingDate(new Date())
+    console.log(startingDate)
   }
 
   const onClickCancel = () => {
     setIsActive(false)
-    console.log(subscription)
     subscription.remove()
     setSubscription(null)
   }
 
-  const onClickSave = () => {
-    console.log('Calling POST on API')
+  const onClickSave = async () => {
+    const newWorkoutResult = {
+      Typ: 'Walk',
+      StepAmount: currentStepCount,
+      StartDate: DateTime.formatDate(startingDate),
+      EndDate: DateTime.formatDate(
+        new Date(startingDate.getTime() + timeElapsed * 1000),
+      ),
+      ClientId: user.Id,
+    }
+    const result = await WorkoutResultsRequest.createWorkoutResult(
+      newWorkoutResult,
+    )
+    if (result instanceof String) {
+      toast.show({
+        title: 'Error',
+        status: 'alert',
+        description: 'Encountered error, while saving result',
+      })
+    }
   }
 
   const onClickReset = () => {
@@ -171,7 +171,7 @@ const Counter = ({ navigation }) => {
         </Text>
         <View style={styles.stopwatchBox}>
           <Text style={styles.stopwatchBoxText}>
-            {formatTimeElapsed(timeElapsed)}
+            {DateTime.formatTimeElapsed(timeElapsed)}
           </Text>
         </View>
         {isActive && <PulseAnimation />}
@@ -211,16 +211,12 @@ const Counter = ({ navigation }) => {
 }
 
 Counter.propTypes = {
-  route: PropTypes.shape({
-    params: PropTypes.shape({ from: PropTypes.string }),
-  }),
   navigation: PropTypes.shape({
     goBack: PropTypes.func,
   }),
 }
 
 Counter.defaultProps = {
-  route: { params: { from: '' } },
   navigation: { goBack: () => null },
 }
 
