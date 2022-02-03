@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 })
 
 const Counter = ({ navigation }) => { // eslint-disable-line no-unused-vars
-  const { user } = useSelector((state) => state.auth.user)
+  const { isLoggedIn, user } = useSelector((state) => state.auth)
   const [isActive, setIsActive] = useState(false)
   const [currentStepCount, setCurrentStepCount] = useState(0)
   const [subscription, setSubscription] = useState(null)

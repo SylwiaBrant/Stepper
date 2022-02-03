@@ -2,16 +2,12 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View } from 'react-native'
 import {
-  Box,
-  Button,
-  FormControl,
-  Heading,
-  Input,
-  useToast,
-  VStack,
+  Box, Button, FormControl, Heading, Input, VStack,
 } from 'native-base'
 import { colors } from '../../theme'
 import ClientRequest from '../../routes/ClientRequest'
+import { loginUser } from '../../slices/app.slice'
+import { useDispatch, useSelector } from 'react-redux'
 
 const styles = StyleSheet.create({
   root: {
@@ -30,13 +26,8 @@ const styles = StyleSheet.create({
 const Login = ({ navigation }) => {
   const [login, setLogin] = useState(undefined)
   const [password, setPassword] = useState(undefined)
-  const toast = useToast()
+  const dispatch = useDispatch()
 
-  const handleChange = () => {}
-
-  const handleLogin = () => {
-    console.log('Logging...')
-  }
   return (
     <View style={styles.root}>
       <Box safeArea p="2" py="8" w="90%" maxW="290">
@@ -68,6 +59,7 @@ const Login = ({ navigation }) => {
               borderWidth={2}
               borderColor="#000000"
               backgroundColor="#ecffff"
+              placeholder="e.g. Please enter Your email"
               onChange={(event) => {
                 setLogin(event.target.value)
               }}
@@ -81,6 +73,7 @@ const Login = ({ navigation }) => {
               borderColor="#000000"
               backgroundColor="#ecffff"
               type="password"
+              placeholder="e.g. Please enter Your password"
               onChange={(event) => {
                 setPassword(event.target.value)
               }}
@@ -108,21 +101,7 @@ const Login = ({ navigation }) => {
             }}
             onPress={async () => {
               const response = await ClientRequest.loginClient(login, password)
-              console.log(response)
-              if (
-                Array.isArray(response)
-                && response.length === 1
-                && Number.isInteger(response[0])
-              ) {
-                navigation.navigate('Home')
-              } else {
-                toast.show({
-                  placement: 'top',
-                  title: 'Something went wrong',
-                  description: response,
-                  status: 'alert',
-                })
-              }
+              dispatch(loginUser(response))
             }}
           >
             Sign in

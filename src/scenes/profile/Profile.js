@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
 })
 
 const Profile = ({ navigation }) => { // eslint-disable-line no-unused-vars
-  const { user } = useSelector((state) => state.auth.user)
+  const { isLoggedIn, user } = useSelector((state) => state.auth)
   const [workoutResult, setWorkoutResult] = useState('NULL')
   const toast = useToast()
 
