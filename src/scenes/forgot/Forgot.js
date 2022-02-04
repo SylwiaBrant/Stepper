@@ -39,10 +39,7 @@ const Forgot = () => (
       </Heading>
       <Heading
         mt="1"
-        _dark={{
-          color: 'warmGray.200',
-        }}
-        color="coolGray.600"
+        color={colors.indigo}
         fontWeight="medium"
         size="xs"
       >

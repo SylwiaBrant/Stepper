@@ -38,18 +38,12 @@ const Registration = ({ navigation }) => {
         <Heading
           size="lg"
           fontWeight="bold"
-          color="coolGray.800"
-          _dark={{
-            color: 'warmGray.50',
-          }}
+          color={colors.indigo}
         >
           Create new Account
         </Heading>
         <Heading
           mt="1"
-          _dark={{
-            color: 'warmGray.200',
-          }}
           color="coolGray.600"
           fontWeight="medium"
           size="xs"

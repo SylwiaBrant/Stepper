@@ -34,18 +34,12 @@ const Login = ({ navigation }) => {
         <Heading
           size="lg"
           fontWeight="bold"
-          color="coolGray.800"
-          _dark={{
-            color: 'warmGray.50',
-          }}
+          color={colors.indigo}
         >
           Welcome
         </Heading>
         <Heading
           mt="1"
-          _dark={{
-            color: 'warmGray.200',
-          }}
           color="coolGray.600"
           fontWeight="medium"
           size="xs"
@@ -83,7 +77,7 @@ const Login = ({ navigation }) => {
                 fontSize: 'xs',
                 color: '#ffffff',
               }}
-              colorScheme="blue"
+              colorScheme="indigo"
               alignSelf="flex-end"
               mt="1"
               onPress={() => {
@@ -95,20 +89,21 @@ const Login = ({ navigation }) => {
           </FormControl>
           <Button
             mt="1"
-            colorScheme="indigo"
+            backgroundColor={colors.indigo}
             _text={{
               fontSize: 'sm',
             }}
             onPress={async () => {
               const response = await ClientRequest.loginClient(login, password)
-              dispatch(loginUser(response))
+              dispatch(loginUser(response[0]))
+              console.log(response[0])
             }}
           >
             Sign in
           </Button>
           <Button
             mt="1"
-            colorScheme="indigo"
+            backgroundColor={colors.indigo}
             _text={{
               fontSize: 'sm',
             }}

@@ -3,14 +3,7 @@ import { View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { colors } from '../../../theme'
-
-// stack navigators
-import {
-  HomeNavigator,
-  ProfileNavigator,
-  CounterNavigator,
-  RandomActivityNavigator,
-} from '../stacks'
+import { CounterNavigator, HomeNavigator, ProfileNavigator, RandomActivityNavigator } from '../stacks'
 
 const Tab = createBottomTabNavigator()
 
@@ -41,17 +34,17 @@ const TabNavigator = () => (
           case 'Counter':
             return (
               <FontIcon
-                name="running"
+                name="skiing"
                 color={focused ? colors.moccasin : colors.white}
                 size={20}
                 solid
               />
             )
-          case 'Random Activity':
+         case 'Activity':
             return (
               <FontIcon
                 name="dumbbell"
-                color={focused ? colors.lightPurple : colors.gray}
+                color={focused ? colors.moccasin : colors.white}
                 size={20}
                 solid
               />

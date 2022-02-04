@@ -260,3 +260,55 @@ export const RandomActivityNavigator = () => (
     />
   </Stack.Navigator>
 )
+
+export const RandomActivityNavigator = () => (
+  <Stack.Navigator
+    initialRouteName="RandomActivity"
+    headerMode="screen"
+    screenOptions={navigationProps}
+  >
+    <Stack.Screen
+      name="RandomActivity"
+      component={RandomActivity}
+      options={({ navigation }) => ({
+        title: 'RandomActivity',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
+    />
+    <Stack.Screen
+      name="Counter"
+      component={Counter}
+      options={({ navigation }) => ({
+        title: 'Counter',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
+    />
+    <Stack.Screen
+      name="Home"
+      component={Home}
+      options={({ navigation }) => ({
+        title: 'Home',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
+    />
+    <Stack.Screen
+      name="Profile"
+      component={Profile}
+      options={({ navigation }) => ({
+        title: 'Profile',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
+    />
+    <Stack.Screen
+      name="Login"
+      component={Login}
+      options={{
+        title: 'Login',
+      }}
+    />
+  </Stack.Navigator>
+)
