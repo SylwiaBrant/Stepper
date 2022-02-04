@@ -41,7 +41,7 @@ const Weight = ({ route, navigation }) => {
               borderWidth={2}
               borderColor="#000000"
               backgroundColor="#ecffff"
-              placeholder="e.g. 170"
+              placeholder="e.g. 70"
               onChangeText={newWeight => setWeight(newWeight)}
             />
           </FormControl>
@@ -54,7 +54,7 @@ const Weight = ({ route, navigation }) => {
             onPress={() => {
               route.params.user.weight = weight
               navigation.navigate('Goal', {
-                user: route.params,
+                user: route.params.user,
               })
             }}
           >

@@ -42,7 +42,7 @@ const Height = ({ route, navigation }) => {
               borderWidth={2}
               borderColor="#000000"
               backgroundColor="#ecffff"
-              placeholder="e.g. 70"
+              placeholder="e.g. 170"
               onChangeText={newHeight => setHeight(newHeight)}
             />
           </FormControl>

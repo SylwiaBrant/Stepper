@@ -43,7 +43,7 @@ const Goal = ({ route, navigation }) => {
               borderColor="#000000"
               backgroundColor="#ecffff"
               placeholder="e.g. 8000"
-              onChange={handleChange}
+              onChangeText={newGoal => setGoal(newGoal)}
             />
           </FormControl>
           <Button
@@ -55,7 +55,7 @@ const Goal = ({ route, navigation }) => {
             onPress={() => {
               route.params.user.goal = goal
               navigation.navigate('Date', {
-                user: route.params,
+                user: route.params.user,
               })
             }}
           >

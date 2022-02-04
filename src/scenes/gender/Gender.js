@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View } from 'react-native'
 import {
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const Gender = ({ navigation }) => {
+const Gender = ({ route, navigation }) => {
   const [gender, setGender] = useState("")
   console.log(route.params.user)
   return (
@@ -43,7 +43,7 @@ const Gender = ({ navigation }) => {
               borderColor="#000000"
               backgroundColor="#ecffff"
               placeholder="e.g. Male"
-              onChange={handleChange}
+              onChangeText={newGender => setGender(newGender)}
             />
           </FormControl>
           <Button

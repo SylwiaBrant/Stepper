@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View } from 'react-native'
 import {
@@ -20,9 +20,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const handleChange = () => {}
-
-const Date = ({ navigation }) => {
+const Date = ({ route, navigation }) => {
   const [date, setDate] = useState("")
   console.log(route.params.user)
   return (
@@ -45,7 +43,7 @@ const Date = ({ navigation }) => {
               borderColor="#000000"
               backgroundColor="#ecffff"
               placeholder="e.g. 1998-01-01"
-              onChange={handleChange}
+              onChangeText={newDate => setDate(newDate)}
             />
           </FormControl>
           <Button
@@ -57,7 +55,7 @@ const Date = ({ navigation }) => {
               onPress={() => {
                 route.params.user.date = date
                 navigation.navigate('Gender', {
-                  user: route.params,
+                  user: route.params.user,
                 })
               }}
           >
