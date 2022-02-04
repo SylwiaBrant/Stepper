@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
 
 const Height = ({ route, navigation }) => {
   const [height, setHeight] = useState("")
-  console.log(route.params.user)
   return (
     <View style={styles.root}>
       <Box safeArea p="2" py="8" w="90%" maxW="290">

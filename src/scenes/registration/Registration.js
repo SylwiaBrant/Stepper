@@ -30,6 +30,7 @@ const Registration = ({ navigation }) => {
   const [login, setLogin] = useState("")
   const [password, setPassword] = useState("")
   const toast = useToast()
+  const dispatch = useDispatch()
 
   return (
     <View style={styles.root}>
