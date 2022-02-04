@@ -24,8 +24,13 @@ const Stack = createStackNavigator()
 const AuthStack = createStackNavigator()
 
 const navigationProps = {
-  headerTintColor: 'white',
-  headerStyle: { backgroundColor: colors.darkPurple },
+  headerTintColor: 'lightcyan',
+  headerStyle: {
+    backgroundColor: colors.lightcyan,
+    elevation: 0,
+    shadowOpacity: 0,
+    borderBottomWidth: 0,
+  },
   headerTitleStyle: { fontSize: 18 },
 }
 

@@ -29,10 +29,7 @@ const Date = ({ route, navigation }) => {
         <Heading
           size="lg"
           fontWeight="bold"
-          color="coolGray.800"
-          _dark={{
-            color: 'warmGray.50',
-          }}
+          backgroundColor={colors.indigo}
         >
           Enter Your date of birth
         </Heading>
