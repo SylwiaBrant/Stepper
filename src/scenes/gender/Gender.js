@@ -5,6 +5,7 @@ import {
   Box, Button, FormControl, Heading, Input, VStack,
 } from 'native-base'
 import { colors } from '../../theme'
+import { useDispatch } from 'react-redux'
 
 const styles = StyleSheet.create({
   root: {
@@ -22,7 +23,6 @@ const styles = StyleSheet.create({
 
 const Gender = ({ route, navigation }) => {
   const [gender, setGender] = useState("")
-  console.log(route.params.user)
   return (
     <View style={styles.root}>
       <Box safeArea p="2" py="8" w="90%" maxW="290">
@@ -52,20 +52,7 @@ const Gender = ({ route, navigation }) => {
             onPress={async () => {
               route.params.user.gender = gender
               const response = await ClientRequest.addNewClient(route.params.user)
-              if (
-                Array.isArray(response)
-                && response.length === 1
-                && Number.isInteger(response[0])
-              ) {
-                navigation.navigate('Home', { from: 'Registration' })
-              } else {
-                toast.show({
-                  placement: 'top',
-                  title: 'Something went wrong',
-                  description: response,
-                  status: 'alert',
-                })
-              }
+              dispatch(loginUser(response))
             }}
             _text={{
               fontSize: 'sm',
