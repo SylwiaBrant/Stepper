@@ -47,7 +47,7 @@ const Goal = ({ navigation }) => (
         </FormControl>
         <Button
           mt="1"
-          colorScheme="indigo"
+          backgroundColor={colors.indigo}
           _text={{
             fontSize: 'sm',
           }}

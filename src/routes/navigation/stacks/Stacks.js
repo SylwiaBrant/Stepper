@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import { colors } from 'theme'
+import { colors } from '../../../theme'
 import Home from '../../../scenes/home'
 import Profile from '../../../scenes/profile'
 import Counter from '../../../scenes/counter'
@@ -23,8 +23,13 @@ const Stack = createStackNavigator()
 const AuthStack = createStackNavigator()
 
 const navigationProps = {
-  headerTintColor: 'white',
-  headerStyle: { backgroundColor: colors.darkPurple },
+  headerTintColor: 'lightcyan',
+  headerStyle: {
+    backgroundColor: colors.lightcyan,
+    elevation: 0,
+    shadowOpacity: 0,
+    borderBottomWidth: 0,
+  },
   headerTitleStyle: { fontSize: 18 },
 }
 
@@ -34,19 +39,71 @@ const navigationProps = {
 
 export const AuthStackScreen = () => (
   <AuthStack.Navigator>
-    <AuthStack.Screen name="Login" component={Login} />
-    <AuthStack.Screen name="Registration" component={Registration} />
-    <AuthStack.Screen name="Forgot" component={Forgot} />
-    <AuthStack.Screen name="Height" component={Height} />
-    <AuthStack.Screen name="Weight" component={Weight} />
-    <AuthStack.Screen name="Goal" component={Goal} />
-    <AuthStack.Screen name="Date" component={Date} />
-    <AuthStack.Screen name="Gender" component={Gender} />
+    <AuthStack.Screen
+      name="Login"
+      component={Login}
+      options={() => ({
+        headerShown: false,
+      })}
+    />
+    <AuthStack.Screen
+      name="Registration"
+      component={Registration}
+      options={() => ({
+        headerShown: false,
+      })}
+    />
+    <AuthStack.Screen
+      name="Forgot"
+      component={Forgot}
+      options={() => ({
+        headerShown: false,
+      })}
+    />
+    <AuthStack.Screen
+      name="Height"
+      component={Height}
+      options={() => ({
+        headerShown: false,
+      })}
+    />
+    <AuthStack.Screen
+      name="Weight"
+      component={Weight}
+      options={() => ({
+        headerShown: false,
+      })}
+    />
+    <AuthStack.Screen
+      name="Goal"
+      component={Goal}
+      options={() => ({
+        headerShown: false,
+      })}
+    />
+    <AuthStack.Screen
+      name="Date"
+      component={Date}
+      options={() => ({
+        headerShown: false,
+      })}
+    />
+    <AuthStack.Screen
+      name="Gender"
+      component={Gender}
+      options={() => ({
+        headerShown: false,
+      })}
+    />
   </AuthStack.Navigator>
 )
 
 export const HomeNavigator = () => (
-  <Stack.Navigator initialRouteName="Home" headerMode="screen">
+  <Stack.Navigator
+    initialRouteName="Home"
+    headerMode="screen"
+    screenOptions={navigationProps}
+  >
     <Stack.Screen
       name="Home"
       component={Home}

@@ -11,6 +11,11 @@ const colors = {
   lightSteelBlue: '#b0c4de',
   lightcyan: '#e0ffff',
   aquamarine: '#7fffd4',
+  indigo: '#4b0082',
+  cornflowerblue: '#6495ed',
+  ghostwhite: '#f8f8ff',
+  beige: '#f5f5dc',
+  moccasin: '#ffe4b5',
 }
 
 export default colors

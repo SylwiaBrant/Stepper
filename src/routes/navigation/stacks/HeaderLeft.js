@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 const HeaderLeft = ({ navigation }) => (
   <FontIcon.Button
     name="bars"
-    color="white"
+    color="indigo"
     backgroundColor="transparent"
     onPress={() => {
       navigation.openDrawer()

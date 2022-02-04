@@ -61,7 +61,7 @@ const Forgot = () => (
         </FormControl>
         <Button
           mt="1"
-          colorScheme="indigo"
+          backgroundColor={colors.indigo}
           onSubmit={handleSubmit}
           _text={{
             fontSize: 'sm',
