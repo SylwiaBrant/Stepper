@@ -1,3 +1,17 @@
-import { HomeNavigator, ProfileNavigator, CounterNavigator, AuthStackScreen } from './Stacks'
+import {
+  HomeNavigator,
+  ProfileNavigator,
+  CounterNavigator,
+  LoginNavigator,
+  RandomActivityNavigator,
+  AuthStackScreen,
+} from './Stacks'
 
-export { HomeNavigator, ProfileNavigator, CounterNavigator, AuthStackScreen }
+export {
+  HomeNavigator,
+  ProfileNavigator,
+  CounterNavigator,
+  LoginNavigator,
+  RandomActivityNavigator,
+  AuthStackScreen,
+}
