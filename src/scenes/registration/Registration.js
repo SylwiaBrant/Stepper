@@ -24,11 +24,11 @@ const styles = StyleSheet.create({
 })
 
 const Registration = ({ navigation }) => {
-  const [name, setName] = useState(undefined)
-  const [lastName, setLastName] = useState(undefined)
-  const [email, setEmail] = useState(undefined)
-  const [login, setLogin] = useState(undefined)
-  const [password, setPassword] = useState(undefined)
+  const [name, setName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [email, setEmail] = useState("")
+  const [login, setLogin] = useState("")
+  const [password, setPassword] = useState("")
   const toast = useToast()
 
   return (
@@ -64,9 +64,7 @@ const Registration = ({ navigation }) => {
               backgroundColor="#ecffff"
               type="text"
               placeholder="e.g. John"
-              onChange={(event) => {
-                setName(event.target.value)
-              }}
+              onChangeText={newName => setName(newName)}
             />
           </FormControl>
           <FormControl>
@@ -78,9 +76,7 @@ const Registration = ({ navigation }) => {
               backgroundColor="#ecffff"
               type="text"
               placeholder="e.g. Doe"
-              onChange={(event) => {
-                setLastName(event.target.value)
-              }}
+              onChangeText={newLastName => setLastName(newLastName)}
             />
           </FormControl>
           <FormControl>
@@ -92,9 +88,7 @@ const Registration = ({ navigation }) => {
               backgroundColor="#ecffff"
               type="text"
               placeholder="e.g. email@example.com"
-              onChange={(event) => {
-                setEmail(event.target.value)
-              }}
+              onChangeText={newEmail => setEmail(newEmail)}
             />
           </FormControl>
           <FormControl>
@@ -106,9 +100,7 @@ const Registration = ({ navigation }) => {
               backgroundColor="#ecffff"
               type="text"
               placeholder="e.g. JohnD"
-              onChange={(event) => {
-                setLogin(event.target.value)
-              }}
+              onChangeText={newLogin => setLogin(newLogin)}
             />
           </FormControl>
           <FormControl>
@@ -120,39 +112,22 @@ const Registration = ({ navigation }) => {
               backgroundColor="#ecffff"
               type="password"
               placeholder="e.g. Please remember Your password"
-              onChange={(event) => {
-                setPassword(event.target.value)
-              }}
+              onChangeText={newPassword => setPassword(newPassword)}
             />
           </FormControl>
           <Button
             mt="2"
-            backgroundColor={colors.indigo}
-            onPress={async () => {
-              const client = {
-                Name: name,
-                LastName: lastName,
-                Email: email,
-                Login: login,
-                Password: password,
-              }
-              navigation.navigate('Height')
-
-              const response = await ClientRequest.addNewClient(client)
-              if (
-                Array.isArray(response)
-                && response.length === 1
-                && Number.isInteger(response[0])
-              ) {
-                navigation.navigate('Home', { from: 'Registration' })
-              } else {
-                toast.show({
-                  placement: 'top',
-                  title: 'Something went wrong',
-                  description: response,
-                  status: 'alert',
-                })
-              }
+            colorScheme="indigo"
+            onPress={() => {
+              navigation.navigate('Height', {
+                user: {
+                  name: name,
+                  lastName: lastName,
+                  email: email,
+                  login: login,
+                  password: password,
+                }
+              })
             }}
           >
             Next
