@@ -6,6 +6,7 @@ import Profile from '../../../scenes/profile'
 import Counter from '../../../scenes/counter'
 import Login from '../../../scenes/login'
 import Registration from '../../../scenes/registration'
+import RandomActivity from 'scenes/randomActivity'
 import HeaderLeft from './HeaderLeft'
 import HeaderTitle from './HeaderTitle'
 import Forgot from '../../../scenes/forgot'
@@ -23,13 +24,8 @@ const Stack = createStackNavigator()
 const AuthStack = createStackNavigator()
 
 const navigationProps = {
-  headerTintColor: 'lightcyan',
-  headerStyle: {
-    backgroundColor: colors.lightcyan,
-    elevation: 0,
-    shadowOpacity: 0,
-    borderBottomWidth: 0,
-  },
+  headerTintColor: 'white',
+  headerStyle: { backgroundColor: colors.darkPurple },
   headerTitleStyle: { fontSize: 18 },
 }
 
@@ -123,11 +119,13 @@ export const HomeNavigator = () => (
       })}
     />
     <Stack.Screen
-      name="Login"
-      component={Login}
-      options={{
-        title: 'Login',
-      }}
+      name="Random Activity"
+      component={RandomActivity}
+      options={({ navigation }) => ({
+        title: 'Profile',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
     />
   </Stack.Navigator>
 )
@@ -157,11 +155,13 @@ export const ProfileNavigator = () => (
       })}
     />
     <Stack.Screen
-      name="Login"
-      component={Login}
-      options={{
-        title: 'Login',
-      }}
+      name="Random Activity"
+      component={RandomActivity}
+      options={({ navigation }) => ({
+        title: 'Profile',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
     />
   </Stack.Navigator>
 )
@@ -200,11 +200,58 @@ export const CounterNavigator = () => (
       })}
     />
     <Stack.Screen
-      name="Login"
-      component={Login}
-      options={{
-        title: 'Login',
-      }}
+      name="Random Activity"
+      component={RandomActivity}
+      options={({ navigation }) => ({
+        title: 'Profile',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
+    />
+  </Stack.Navigator>
+)
+
+export const RandomActivityNavigator = () => (
+  <Stack.Navigator
+    initialRouteName="Random Activity"
+    headerMode="screen"
+    screenOptions={navigationProps}
+  >
+    <Stack.Screen
+      name="Counter"
+      component={Counter}
+      options={({ navigation }) => ({
+        title: 'Counter',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
+    />
+    <Stack.Screen
+      name="Home"
+      component={Home}
+      options={({ navigation }) => ({
+        title: 'Home',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
+    />
+    <Stack.Screen
+      name="Profile"
+      component={Profile}
+      options={({ navigation }) => ({
+        title: 'Profile',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
+    />
+    <Stack.Screen
+      name="Random Activity"
+      component={RandomActivity}
+      options={({ navigation }) => ({
+        title: 'Profile',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
     />
   </Stack.Navigator>
 )
