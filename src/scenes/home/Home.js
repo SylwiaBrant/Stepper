@@ -25,10 +25,9 @@ const Home = ({ navigation }) => (
     <StatusBar barStyle="light-content" />
     <Text style={styles.title}>Home</Text>
     <Button
-      title="Go to Details"
       color="white"
       backgroundColor={colors.indigo}
-      onPress={() => navigation.navigate('Details', { from: 'Home' })}
+      onPress={() => navigation.navigate('Counter', { from: 'Home' })}
     />
   </View>
 )
