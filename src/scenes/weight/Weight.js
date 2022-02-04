@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View } from 'react-native'
 import {
@@ -20,47 +20,51 @@ const styles = StyleSheet.create({
   },
 })
 
-const handleChange = () => {}
-
-const Weight = ({ navigation }) => (
-  <View style={styles.root}>
-    <Box safeArea p="2" py="8" w="90%" maxW="290">
-      <Heading
-        size="lg"
-        fontWeight="bold"
-        color="coolGray.800"
-        _dark={{
-          color: 'warmGray.50',
-        }}
-      >
-        Enter Your weight
-      </Heading>
-      <VStack space={3} mt="5">
-        <FormControl>
-          <Input
-            borderWidth={2}
-            borderColor="#000000"
-            backgroundColor="#ecffff"
-            placeholder="e.g. 170"
-            onChange={handleChange}
-          />
-        </FormControl>
-        <Button
-          mt="1"
-          backgroundColor={colors.indigo}
-          _text={{
-            fontSize: 'sm',
-          }}
-          onPress={() => {
-            navigation.navigate('Goal')
+const Weight = ({ route, navigation }) => {
+  const [weight, setWeight] = useState("")
+  return (
+    <View style={styles.root}>
+      <Box safeArea p="2" py="8" w="90%" maxW="290">
+        <Heading
+          size="lg"
+          fontWeight="bold"
+          color="coolGray.800"
+          _dark={{
+            color: 'warmGray.50',
           }}
         >
-          Next
-        </Button>
-      </VStack>
-    </Box>
-  </View>
-)
+          Enter Your weight
+        </Heading>
+        <VStack space={3} mt="5">
+          <FormControl>
+            <Input
+              borderWidth={2}
+              borderColor="#000000"
+              backgroundColor="#ecffff"
+              placeholder="e.g. 170"
+              onChangeText={newWeight => setWeight(newWeight)}
+            />
+          </FormControl>
+          <Button
+            mt="1"
+            backgroundColor={colors.indigo}
+            _text={{
+              fontSize: 'sm',
+            }}
+            onPress={() => {
+              route.params.user.weight = weight
+              navigation.navigate('Goal', {
+                user: route.params,
+              })
+            }}
+          >
+            Next
+          </Button>
+        </VStack>
+      </Box>
+    </View>
+  )
+}
 Weight.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View } from 'react-native'
 import {
@@ -20,47 +20,52 @@ const styles = StyleSheet.create({
   },
 })
 
-const handleChange = () => {}
-
-const Height = ({ navigation }) => (
-  <View style={styles.root}>
-    <Box safeArea p="2" py="8" w="90%" maxW="290">
-      <Heading
-        size="lg"
-        fontWeight="bold"
-        color="coolGray.800"
-        _dark={{
-          color: 'warmGray.50',
-        }}
-      >
-        Enter Your height
-      </Heading>
-      <VStack space={3} mt="5">
-        <FormControl>
-          <Input
-            borderWidth={2}
-            borderColor="#000000"
-            backgroundColor="#ecffff"
-            placeholder="e.g. 70"
-            onChange={handleChange}
-          />
-        </FormControl>
-        <Button
-          mt="1"
-          backgroundColor={colors.indigo}
-          _text={{
-            fontSize: 'sm',
-          }}
-          onPress={() => {
-            navigation.navigate('Weight')
+const Height = ({ route, navigation }) => {
+  const [height, setHeight] = useState("")
+  console.log(route.params.user)
+  return (
+    <View style={styles.root}>
+      <Box safeArea p="2" py="8" w="90%" maxW="290">
+        <Heading
+          size="lg"
+          fontWeight="bold"
+          color="coolGray.800"
+          _dark={{
+            color: 'warmGray.50',
           }}
         >
-          Next
-        </Button>
-      </VStack>
-    </Box>
-  </View>
-)
+          Enter Your height
+        </Heading>
+        <VStack space={3} mt="5">
+          <FormControl>
+            <Input
+              borderWidth={2}
+              borderColor="#000000"
+              backgroundColor="#ecffff"
+              placeholder="e.g. 70"
+              onChangeText={newHeight => setHeight(newHeight)}
+            />
+          </FormControl>
+          <Button
+            mt="1"
+            backgroundColor={colors.indigo}
+            _text={{
+              fontSize: 'sm',
+            }}
+            onPress={() => {
+              route.params.user.height = height
+              navigation.navigate('Weight', {
+                user: route.params.user,
+              })
+            }}
+          >
+            Next
+          </Button>
+        </VStack>
+      </Box>
+    </View>
+  )
+}
 
 Height.propTypes = {
   navigation: PropTypes.shape({

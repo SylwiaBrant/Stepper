@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View } from 'react-native'
 import {
@@ -20,47 +20,52 @@ const styles = StyleSheet.create({
   },
 })
 
-const handleChange = () => {}
-
-const Goal = ({ navigation }) => (
-  <View style={styles.root}>
-    <Box safeArea p="2" py="8" w="90%" maxW="290">
-      <Heading
-        size="lg"
-        fontWeight="bold"
-        color="coolGray.800"
-        _dark={{
-          color: 'warmGray.50',
-        }}
-      >
-        Enter Your goal of steps
-      </Heading>
-      <VStack space={3} mt="5">
-        <FormControl>
-          <Input
-            borderWidth={2}
-            borderColor="#000000"
-            backgroundColor="#ecffff"
-            placeholder="e.g. 8000"
-            onChange={handleChange}
-          />
-        </FormControl>
-        <Button
-          mt="1"
-          backgroundColor={colors.indigo}
-          _text={{
-            fontSize: 'sm',
-          }}
-          onPress={() => {
-            navigation.navigate('Date')
+const Goal = ({ route, navigation }) => {
+  const [goal, setGoal] = useState("")
+  console.log(route.params.user)
+  return (
+    <View style={styles.root}>
+      <Box safeArea p="2" py="8" w="90%" maxW="290">
+        <Heading
+          size="lg"
+          fontWeight="bold"
+          color="coolGray.800"
+          _dark={{
+            color: 'warmGray.50',
           }}
         >
-          Next
-        </Button>
-      </VStack>
-    </Box>
-  </View>
-)
+          Enter Your goal of steps
+        </Heading>
+        <VStack space={3} mt="5">
+          <FormControl>
+            <Input
+              borderWidth={2}
+              borderColor="#000000"
+              backgroundColor="#ecffff"
+              placeholder="e.g. 8000"
+              onChange={handleChange}
+            />
+          </FormControl>
+          <Button
+            mt="1"
+            backgroundColor={colors.indigo}
+            _text={{
+              fontSize: 'sm',
+            }}
+            onPress={() => {
+              route.params.user.goal = goal
+              navigation.navigate('Date', {
+                user: route.params,
+              })
+            }}
+          >
+            Next
+          </Button>
+        </VStack>
+      </Box>
+    </View>
+  )
+}
 Goal.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
