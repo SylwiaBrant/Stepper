@@ -47,7 +47,7 @@ const Gender = ({ navigation }) => (
         </FormControl>
         <Button
           mt="1"
-          colorScheme="indigo"
+          backgroundColor={colors.indigo}
           onPress={() => {
             navigation.navigate('Home')
           }}

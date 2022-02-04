@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import {
   StatusBar, StyleSheet, Text, View,
 } from 'react-native'
-import Button from 'components/Button'
-import { colors } from 'theme'
+import Button from '../../components/Button'
+import { colors } from '../../theme'
 
 const styles = StyleSheet.create({
   root: {
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.lightGrayPurple,
+    backgroundColor: colors.lightcyan,
   },
   title: {
     fontSize: 24,
@@ -27,7 +27,7 @@ const Home = ({ navigation }) => (
     <Button
       title="Go to Details"
       color="white"
-      backgroundColor={colors.lightPurple}
+      backgroundColor={colors.indigo}
       onPress={() => navigation.navigate('Details', { from: 'Home' })}
     />
   </View>

@@ -10,7 +10,7 @@ import {
   useToast,
   VStack,
 } from 'native-base'
-import { colors } from 'theme'
+import { colors } from '../../theme'
 import ClientRequest from '../../routes/ClientRequest'
 
 const styles = StyleSheet.create({
@@ -63,6 +63,7 @@ const Registration = ({ navigation }) => {
               borderColor="#000000"
               backgroundColor="#ecffff"
               type="text"
+              placeholder="e.g. John"
               onChange={(event) => {
                 setName(event.target.value)
               }}
@@ -76,6 +77,7 @@ const Registration = ({ navigation }) => {
               borderColor="#000000"
               backgroundColor="#ecffff"
               type="text"
+              placeholder="e.g. Doe"
               onChange={(event) => {
                 setLastName(event.target.value)
               }}
@@ -89,6 +91,7 @@ const Registration = ({ navigation }) => {
               borderColor="#000000"
               backgroundColor="#ecffff"
               type="text"
+              placeholder="e.g. email@example.com"
               onChange={(event) => {
                 setEmail(event.target.value)
               }}
@@ -102,6 +105,7 @@ const Registration = ({ navigation }) => {
               borderColor="#000000"
               backgroundColor="#ecffff"
               type="text"
+              placeholder="e.g. JohnD"
               onChange={(event) => {
                 setLogin(event.target.value)
               }}
@@ -115,6 +119,7 @@ const Registration = ({ navigation }) => {
               borderColor="#000000"
               backgroundColor="#ecffff"
               type="password"
+              placeholder="e.g. Please remember Your password"
               onChange={(event) => {
                 setPassword(event.target.value)
               }}
@@ -122,7 +127,7 @@ const Registration = ({ navigation }) => {
           </FormControl>
           <Button
             mt="2"
-            colorScheme="indigo"
+            backgroundColor={colors.indigo}
             onPress={async () => {
               const client = {
                 Name: name,
@@ -150,7 +155,7 @@ const Registration = ({ navigation }) => {
               }
             }}
           >
-            Sign up
+            Next
           </Button>
         </VStack>
       </Box>

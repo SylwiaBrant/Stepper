@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { View, SafeAreaView, Text } from 'react-native'
-
 import { DrawerActions } from '@react-navigation/native'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
-import { colors } from 'theme'
+import { colors } from '../../../theme'
 
 const styles = {
   root: {
@@ -30,7 +29,7 @@ const DrawerMenu = (props) => (
       <FontIcon.Button
         name="times"
         size={20}
-        color={colors.gray}
+        color={colors.indigo}
         backgroundColor="white"
         onPress={() => {
           props.navigation.dispatch(DrawerActions.closeDrawer())
@@ -38,7 +37,7 @@ const DrawerMenu = (props) => (
       />
     </View>
     <View style={styles.main}>
-      <Text>Drawer Menu</Text>
+      <Text>Menu</Text>
     </View>
   </SafeAreaView>
 )
