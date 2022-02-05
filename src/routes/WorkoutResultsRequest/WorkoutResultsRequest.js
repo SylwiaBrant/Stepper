@@ -11,7 +11,7 @@ const getWorkoutResults = async (id) => {
       result = response.data
     })
     .catch((errors) => {
-      result = errors.message
+      result = handleErrors(errors)
     })
   return result
 }
@@ -24,9 +24,16 @@ const createWorkoutResult = async (newWorkoutResult) => {
       result = response.data
     })
     .catch((errors) => {
-      result = errors.message
+      result = handleErrors(errors)
     })
   return result
+}
+
+const handleErrors = (error) => {
+  return {
+    response: error.message,
+    statusCode: 500
+  }
 }
 
 export { getWorkoutResults, createWorkoutResult }

@@ -67,14 +67,14 @@ const Profile = ({ navigation }) => { // eslint-disable-line no-unused-vars
 
   const fetchUserInfo = async () => {
     const result = await WorkoutResultsRequest.getWorkoutResults(0)
-    if (result instanceof String) {
+    if (result.statusCode !== 200) {
       toast.show({
         title: 'Error',
         status: 'alert',
         description: 'Encountered error, while saving result',
       })
     } else {
-      setWorkoutResult(result)
+      setWorkoutResult(result[0])
     }
   }
 
