@@ -35,18 +35,12 @@ const Login = ({ navigation }) => {
         <Heading
           size="lg"
           fontWeight="bold"
-          color="coolGray.800"
-          _dark={{
-            color: 'warmGray.50',
-          }}
+          color={colors.indigo}
         >
           Welcome
         </Heading>
         <Heading
           mt="1"
-          _dark={{
-            color: 'warmGray.200',
-          }}
           color="coolGray.600"
           fontWeight="medium"
           size="xs"
@@ -55,15 +49,13 @@ const Login = ({ navigation }) => {
         </Heading>
         <VStack space={3} mt="5">
           <FormControl>
-            <FormControl.Label>Email:</FormControl.Label>
+            <FormControl.Label>Login:</FormControl.Label>
             <Input
               borderWidth={2}
               borderColor="#000000"
               backgroundColor="#ecffff"
               placeholder="e.g. Please enter Your email"
-              onChange={(event) => {
-                setLogin(event.target.value)
-              }}
+              onChangeText={newLogin => setLogin(newLogin)}
             />
           </FormControl>
           <FormControl>
@@ -75,16 +67,14 @@ const Login = ({ navigation }) => {
               backgroundColor="#ecffff"
               type="password"
               placeholder="e.g. Please enter Your password"
-              onChange={(event) => {
-                setPassword(event.target.value)
-              }}
+              onChangeText={newPassword => setPassword(newPassword)}
             />
             <Button
               _text={{
                 fontSize: 'xs',
                 color: '#ffffff',
               }}
-              colorScheme="blue"
+              colorScheme="indigo"
               alignSelf="flex-end"
               mt="1"
               onPress={() => {
@@ -96,7 +86,7 @@ const Login = ({ navigation }) => {
           </FormControl>
           <Button
             mt="1"
-            colorScheme="indigo"
+            backgroundColor={colors.indigo}
             _text={{
               fontSize: 'sm',
             }}
@@ -117,7 +107,7 @@ const Login = ({ navigation }) => {
           </Button>
           <Button
             mt="1"
-            colorScheme="indigo"
+            backgroundColor={colors.indigo}
             _text={{
               fontSize: 'sm',
             }}

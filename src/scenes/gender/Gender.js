@@ -6,7 +6,8 @@ import {
 } from 'native-base'
 import { colors } from '../../theme'
 import { useDispatch } from 'react-redux'
-import {loginUser} from "../../slices/app.slice";
+import { loginUser } from '../../slices/app.slice'
+import ClientRequest from '../../routes/ClientRequest'
 
 const styles = StyleSheet.create({
   root: {
@@ -24,6 +25,7 @@ const styles = StyleSheet.create({
 
 const Gender = ({ route, navigation }) => {
   const [gender, setGender] = useState("")
+  const dispatch = useDispatch()
   const toast = useToast()
   return (
     <View style={styles.root}>
@@ -31,10 +33,7 @@ const Gender = ({ route, navigation }) => {
         <Heading
           size="lg"
           fontWeight="bold"
-          color="coolGray.800"
-          _dark={{
-            color: 'warmGray.50',
-          }}
+          color={colors.indigo}
         >
           Enter Your gender
         </Heading>
@@ -52,7 +51,7 @@ const Gender = ({ route, navigation }) => {
             mt="1"
             backgroundColor={colors.indigo}
             onPress={async () => {
-              route.params.user.gender = gender
+              route.params.user.Gender = gender
               const response = await ClientRequest.addNewClient(route.params.user)
               if (result.statusCode === 200) {
                 dispatch(loginUser(response?.response[0]))

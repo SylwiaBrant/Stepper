@@ -29,10 +29,7 @@ const Date = ({ route, navigation }) => {
         <Heading
           size="lg"
           fontWeight="bold"
-          color="coolGray.800"
-          _dark={{
-            color: 'warmGray.50',
-          }}
+          color={colors.indigo}
         >
           Enter Your date of birth
         </Heading>
@@ -52,12 +49,12 @@ const Date = ({ route, navigation }) => {
             _text={{
               fontSize: 'sm',
             }}
-              onPress={() => {
-                route.params.user.date = date
-                navigation.navigate('Gender', {
-                  user: route.params.user,
-                })
-              }}
+            onPress={() => {
+              route.params.user.Birthday = date
+              navigation.navigate('Gender', {
+                user: route.params.user,
+              })
+            }}
           >
             Next
           </Button>
@@ -72,6 +69,7 @@ Date.propTypes = {
     navigate: PropTypes.func,
   }),
 }
+
 Date.defaultProps = {
   navigation: { navigate: () => null },
 }

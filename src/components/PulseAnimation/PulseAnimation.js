@@ -18,7 +18,7 @@ const PulseAnimation = () => (
     <Pulse
       style={styles.position}
       pulseStyle={styles.circle}
-      color={colors.lightSteelBlue}
+      color={colors.indigo}
       numPulses={1}
       diameter={300}
       speed={10}

@@ -12,7 +12,6 @@ const Drawer = createDrawerNavigator()
 const DrawerMenuContainer = (props) => {
   const { state, ...rest } = props
   const newState = { ...state }
-  newState.routes = newState.routes.filter((item) => item.name !== 'Home')
   return (
     <DrawerContentScrollView {...props}>
       <DrawerMenu {...props} />
@@ -22,7 +21,7 @@ const DrawerMenuContainer = (props) => {
 }
 
 const DrawerNavigator = () => (
-  <Drawer.Navigator initialRouteName="Home" drawerContent={DrawerMenuContainer}>
+  <Drawer.Navigator initialRouteName="Home" drawerContent={DrawerMenuContainer} activeBackgroundColor="indigo">
     <Drawer.Screen name="Home" component={TabNavigator} />
     <Drawer.Screen name="Profile" component={TabNavigator} />
     <Drawer.Screen name="Counter" component={TabNavigator} />

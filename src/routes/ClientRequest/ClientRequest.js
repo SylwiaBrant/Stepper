@@ -17,7 +17,7 @@ const loginClient = async (login, password) => {
      result = response.data
    })
    .catch((errors) => {
-     result = handleErrors(errors)
+     result = errors.message
    })
  return result
 }

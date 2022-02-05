@@ -31,6 +31,7 @@ const DrawerMenu = (props) => (
         size={20}
         color={colors.indigo}
         backgroundColor="white"
+        activeBackgroundColor="white"
         onPress={() => {
           props.navigation.dispatch(DrawerActions.closeDrawer())
         }}

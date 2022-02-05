@@ -28,10 +28,7 @@ const Height = ({ route, navigation }) => {
         <Heading
           size="lg"
           fontWeight="bold"
-          color="coolGray.800"
-          _dark={{
-            color: 'warmGray.50',
-          }}
+          color={colors.indigo}
         >
           Enter Your height
         </Heading>
