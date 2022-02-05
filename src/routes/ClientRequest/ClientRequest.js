@@ -30,7 +30,7 @@ const getClientById = async (id) => {
       result = response.data
     })
     .catch((errors) => {
-      result = errors.message
+      result = handleErrors(errors)
     })
   return result
 }
@@ -43,7 +43,7 @@ const addNewClient = async (newClient) => {
       result = response.data
     })
     .catch((errors) => {
-      result = errors.message
+      result = handleErrors(errors)
     })
   return result
 }
@@ -56,9 +56,16 @@ const updateClient = async (newClient) => {
       result = response.data
     })
     .catch((errors) => {
-      result = errors.message
+      result = handleErrors(errors)
     })
   return result
+}
+
+const handleErrors = (error) => {
+  return {
+    response: error.message,
+    statusCode: 500
+  }
 }
 
 export {

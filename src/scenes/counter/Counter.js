@@ -150,7 +150,7 @@ const Counter = ({ navigation }) => { // eslint-disable-line no-unused-vars
     const result = await WorkoutResultsRequest.createWorkoutResult(
       newWorkoutResult,
     )
-    if (result instanceof String) {
+    if (result.statusCode !== 200) {
       toast.show({
         title: 'Error',
         status: 'alert',

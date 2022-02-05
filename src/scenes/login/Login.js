@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View } from 'react-native'
 import {
-  Box, Button, FormControl, Heading, Input, VStack,
+  Box, Button, FormControl, Heading, Input, useToast, VStack,
 } from 'native-base'
 import { colors } from '../../theme'
 import ClientRequest from '../../routes/ClientRequest'
@@ -27,6 +27,7 @@ const Login = ({ navigation }) => {
   const [login, setLogin] = useState(undefined)
   const [password, setPassword] = useState(undefined)
   const dispatch = useDispatch()
+  const toast = useToast()
 
   return (
     <View style={styles.root}>
@@ -91,9 +92,15 @@ const Login = ({ navigation }) => {
             }}
             onPress={async () => {
               const response = await ClientRequest.loginClient(login, password)
-              dispatch(loginUser(response[0]))
-              console.log("RESPONSE")
-              console.log(response)
+              if (response.statusCode === 200) {
+                dispatch(loginUser(response?.response[0]))
+              } else{
+                toast.show({
+                  title: 'Error',
+                  status: 'alert',
+                  description: 'Encountered error, while saving result',
+                })
+              }
             }}
           >
             Sign in

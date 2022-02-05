@@ -106,21 +106,21 @@ const Profile = ({ navigation }) => {
     const result = await WorkoutResultsRequest.getWorkoutResults(user.Id)
     console.log(result)
     console.log(user.Id)
-    if (result instanceof String) {
+    if (result.statusCode !== 200) {
       toast.show({
         title: 'Error',
         status: 'alert',
         description: 'Encountered error, while saving result',
       })
     } else {
-      setWorkoutResult(result[0])
+      setWorkoutResult(result.response[0])
       setWorkoutResult_Date(DateTime.formatTimeElapsed(
         (new Date(workoutResult_Date.EndDate).getTime()
           - new Date(workoutResult_Date.StartDate).getTime())
         / 1000,
       ))
       console.log('Data')
-      console.log(result[0])
+      console.log(result.response[0])
     }
   }
 

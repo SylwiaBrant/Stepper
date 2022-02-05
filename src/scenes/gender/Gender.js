@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View } from 'react-native'
 import {
-  Box, Button, FormControl, Heading, Input, VStack,
+  Box, Button, FormControl, Heading, Input, useToast, VStack,
 } from 'native-base'
 import { colors } from '../../theme'
 import { useDispatch } from 'react-redux'
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
 const Gender = ({ route, navigation }) => {
   const [gender, setGender] = useState("")
   const dispatch = useDispatch()
+  const toast = useToast()
   return (
     <View style={styles.root}>
       <Box safeArea p="2" py="8" w="90%" maxW="290">
@@ -52,7 +53,16 @@ const Gender = ({ route, navigation }) => {
             onPress={async () => {
               route.params.user.Gender = gender
               const response = await ClientRequest.addNewClient(route.params.user)
-              dispatch(loginUser(response[0]))
+              if (response.statusCode === 200) {
+                const loginRequest = await ClientRequest.getClientById(response.response)
+                dispatch(loginUser(loginRequest?.response[0]))
+              } else{
+                toast.show({
+                  title: 'Error',
+                  status: 'alert',
+                  description: 'Encountered error, while saving result',
+                })
+              }
             }}
             _text={{
               fontSize: 'sm',
