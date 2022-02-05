@@ -53,8 +53,9 @@ const Gender = ({ route, navigation }) => {
             onPress={async () => {
               route.params.user.Gender = gender
               const response = await ClientRequest.addNewClient(route.params.user)
-              if (result.statusCode === 200) {
-                dispatch(loginUser(response?.response[0]))
+              if (response.statusCode === 200) {
+                const loginRequest = await ClientRequest.getClientById(response.response)
+                dispatch(loginUser(loginRequest?.response[0]))
               } else{
                 toast.show({
                   title: 'Error',
