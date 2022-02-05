@@ -14,16 +14,31 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.lightGrayPurple,
+    backgroundColor: colors.lightcyan,
   },
   image: {
     flex: 1,
     justifyContent: 'center',
   },
+  stopwatchBox: {
+    backgroundColor: colors.darkSlateBlue,
+    paddingVertical: 8,
+    paddingTop: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    padding: 10,
+    zIndex: 20, // ios
+    elevation: 20, // android
+  },
+  stopwatchBoxText: {
+    fontSize: 20,
+    color: colors.white,
+  },
 })
 
 const RandomActivity = () => {
-  const { userId } = useSelector((state) => state.auth)
+  const { isLoggedIn, user } = useSelector((state) => state.auth)
+  console.log(user)
   const [type, setType] = useState(undefined)
   const [startDate, setStartDate] = useState(undefined)
   const [timer, setTimer] = useState(0)
@@ -73,10 +88,11 @@ const RandomActivity = () => {
 
   const onClickSave = async () => {
     const newWorkoutResult = {
-      Typ: type,
+      Type: type,
       StartDate: DateTime.formatDate(startDate),
       EndDate: DateTime.formatDate(new Date()),
-      ClientId: userId,
+      ClientId: user.Id,
+      StepAmount: 0,
     }
     const result = WorkoutResultsRequest.createWorkoutResult(newWorkoutResult)
     if (result.status !== 200) {
@@ -91,12 +107,16 @@ const RandomActivity = () => {
   return (
     <View style={styles.root}>
       <VStack space={10} w="100%" px="3" alignItems="center">
-        <Text fontSize="3xl">Random Activity</Text>
+        <View style={styles.viewOne}>
+          <Text style={{ fontSize: 30, color: colors.indigo, fontWeight: "bold" }}>
+            Random activity
+          </Text>
+        </View>
         <Select
           selectedValue={type}
           minWidth="200"
-          accessibilityLabel="Choose Service"
-          placeholder="Choose Service"
+          accessibilityLabel="Choose activity"
+          placeholder="Choose activity"
           _selectedItem={{
             bg: 'teal.600',
             endIcon: <CheckIcon size="5" isDisabled={isInputBlocked} />,
@@ -118,36 +138,44 @@ const RandomActivity = () => {
         {!isActive && timer !== 0 ? (
           <Button.Group>
             <Button
-              width="40%"
-              colorScheme="info"
-              variant="outline"
+              _text={{
+                fontSize: 'xs',
+                color: '#ffffff',
+              }}
+              backgroundColor={colors.indigo}
+              alignSelf="flex-end"
+              mt="1"
+              width="20"
               onPress={onClickReset}
             >
-              RESET
+              Reset
             </Button>
-            <Button width="40%" colorScheme="info" onPress={onContinue}>
-              Continue
+            <Button
+              _text={{
+                fontSize: 'xs',
+                color: '#ffffff',
+              }}
+              backgroundColor={colors.indigo}
+              alignSelf="flex-end"
+              mt="1"
+              width="20"
+              onPress={onClickSave}
+            >
+              Save
             </Button>
           </Button.Group>
         ) : (
           <Button
-            width="80%"
+            width="50%"
             size="md"
-            colorScheme="primary"
+            color="white"
+            backgroundColor={colors.indigo}
             onPress={isActive ? onClickCancel : onClickStart}
           >
-            {isActive ? 'STOP' : 'START'}
+            {isActive ? 'Stop' : 'Start'}
           </Button>
         )}
-
-        {!isActive && timer !== 0 ? (
-          <Button width="80%" onPress={onClickSave}>
-            {' '}
-            SAVE{' '}
-          </Button>
-        ) : (
           <View />
-        )}
       </VStack>
     </View>
   )

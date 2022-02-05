@@ -28,10 +28,7 @@ const Weight = ({ route, navigation }) => {
         <Heading
           size="lg"
           fontWeight="bold"
-          color="coolGray.800"
-          _dark={{
-            color: 'warmGray.50',
-          }}
+          color={colors.indigo}
         >
           Enter Your weight
         </Heading>
@@ -52,7 +49,7 @@ const Weight = ({ route, navigation }) => {
               fontSize: 'sm',
             }}
             onPress={() => {
-              route.params.user.weight = weight
+              route.params.user.Width = weight
               navigation.navigate('Goal', {
                 user: route.params.user,
               })

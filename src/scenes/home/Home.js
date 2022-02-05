@@ -17,17 +17,41 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     marginBottom: 20,
+    color: colors.indigo,
+  },
+  viewOne:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 50,
+  },
+  viewSecond:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 30,
+    width: "70%",
+    textAlign: 'justify',
   },
 })
 
 const Home = ({ navigation }) => (
   <View style={styles.root}>
     <StatusBar barStyle="light-content" />
-    <Text style={styles.title}>Home</Text>
+    <View style={styles.viewOne}>
+    <Text style={{ fontSize: 30, color: colors.indigo, fontWeight: "bold" }}>
+      Welcome in Stepper App
+    </Text>
+    </View>
+    <View style={styles.viewSecond}>
+    <Text style={{ fontSize: 15, color: colors.gray, fontWeight: "bold" }}>
+      Our app uses a built-in sensor to count your steps. The collected information will be clearly presented in a summary of your activity.
+    </Text>
+    </View>
     <Button
+      title="Get started"
       color="white"
+      fontWeight="medium"
       backgroundColor={colors.indigo}
-      onPress={() => navigation.navigate('Counter', { from: 'Home' })}
+      onPress={() => navigation.navigate('Counter')}
     />
   </View>
 )

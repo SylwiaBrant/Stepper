@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-around',
-    backgroundColor: colors.lightGrayPurple,
+    backgroundColor: colors.lightcyan,
   },
   title: {
     fontSize: 24,
@@ -104,7 +104,7 @@ const Counter = ({ navigation }) => { // eslint-disable-line no-unused-vars
           toast.show({
             title: 'Unavailable',
             status: 'warning',
-            description: 'Pedometer is not compatible with this device.',
+            description: 'Pedometer is not compatible with this device',
           })
         }
         return result
@@ -139,7 +139,7 @@ const Counter = ({ navigation }) => { // eslint-disable-line no-unused-vars
 
   const onClickSave = async () => {
     const newWorkoutResult = {
-      Typ: 'Walk',
+      Type: 'Walk',
       StepAmount: currentStepCount,
       StartDate: DateTime.formatDate(startingDate),
       EndDate: DateTime.formatDate(
@@ -166,6 +166,9 @@ const Counter = ({ navigation }) => { // eslint-disable-line no-unused-vars
   return (
     <View style={styles.root}>
       <VStack space={10} w="100%" px="3" alignItems="center">
+        <Text style={{ fontSize: 30, color: colors.indigo, fontWeight: "bold" }}>
+          Step counter
+        </Text>
         <Text color="coolGray.800" fontSize="8xl">
           {currentStepCount}
         </Text>
@@ -176,33 +179,43 @@ const Counter = ({ navigation }) => { // eslint-disable-line no-unused-vars
         </View>
         {isActive && <PulseAnimation />}
         {!isActive && timeElapsed !== 0 ? (
-          <Button.Group
-            mx={{
-              base: 'auto',
-              md: 100,
-            }}
-            size="md"
-          >
+          <Button.Group>
             <Button
-              width="40%"
-              colorScheme="info"
-              variant="outline"
+              _text={{
+                fontSize: 'xs',
+                color: '#ffffff',
+              }}
+              backgroundColor={colors.indigo}
+              alignSelf="flex-end"
+              mt="1"
+              width="20"
               onPress={onClickReset}
             >
-              RESET
+              Reset
             </Button>
-            <Button width="40%" colorScheme="info" onPress={onClickSave}>
-              SAVE
+            <Button
+              _text={{
+                fontSize: 'xs',
+                color: '#ffffff',
+              }}
+              backgroundColor={colors.indigo}
+              alignSelf="flex-end"
+              mt="1"
+              width="20"
+              onPress={onClickSave}
+            >
+              Save
             </Button>
           </Button.Group>
         ) : (
           <Button
             width="50%"
             size="md"
-            colorScheme="primary"
+            color="white"
+            backgroundColor={colors.indigo}
             onPress={isActive ? onClickCancel : onClickStart}
           >
-            {isActive ? 'STOP' : 'START'}
+            {isActive ? 'Stop' : 'Start'}
           </Button>
         )}
       </VStack>

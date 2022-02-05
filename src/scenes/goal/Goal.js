@@ -28,10 +28,7 @@ const Goal = ({ route, navigation }) => {
         <Heading
           size="lg"
           fontWeight="bold"
-          color="coolGray.800"
-          _dark={{
-            color: 'warmGray.50',
-          }}
+          color={colors.indigo}
         >
           Enter Your goal of steps
         </Heading>
@@ -52,7 +49,7 @@ const Goal = ({ route, navigation }) => {
               fontSize: 'sm',
             }}
             onPress={() => {
-              route.params.user.goal = goal
+              route.params.user.Goal = goal
               navigation.navigate('Date', {
                 user: route.params.user,
               })
