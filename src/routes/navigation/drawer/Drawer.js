@@ -6,8 +6,6 @@ import {
 } from '@react-navigation/drawer'
 import DrawerMenu from './DrawerMenu'
 import TabNavigator from '../tabs'
-import Counter from '../../../scenes/counter'
-import { colors } from '../../../theme'
 
 const Drawer = createDrawerNavigator()
 

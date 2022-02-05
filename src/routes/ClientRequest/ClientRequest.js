@@ -6,21 +6,20 @@ const addNewClientEndpoint = 'http://localhost:8090/addNewClient'
 const updateClientEndpoint = 'http://localhost:8090/updateClient'
 
 const loginClient = async (login, password) => {
-//  const body = {
-//    login,
-//    password,
-//  }
-//  let result
-//  await axios
-//    .post(loginClientEndpoint, body)
-//    .then((response) => {
-//      result = response.data
-//    })
-//    .catch((errors) => {
-//      result = errors.message
-//    })
-//  return result
-return [true]
+ const body = {
+   login,
+   password,
+ }
+ let result
+ await axios
+   .post(loginClientEndpoint, body)
+   .then((response) => {
+     result = response.data
+   })
+   .catch((errors) => {
+     result = errors.message
+   })
+ return result
 }
 
 const getClientById = async (id) => {

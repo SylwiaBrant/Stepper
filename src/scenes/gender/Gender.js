@@ -6,6 +6,8 @@ import {
 } from 'native-base'
 import { colors } from '../../theme'
 import { useDispatch } from 'react-redux'
+import { loginUser } from '../../slices/app.slice'
+import ClientRequest from '../../routes/ClientRequest'
 
 const styles = StyleSheet.create({
   root: {
@@ -23,6 +25,7 @@ const styles = StyleSheet.create({
 
 const Gender = ({ route, navigation }) => {
   const [gender, setGender] = useState("")
+  const dispatch = useDispatch()
   return (
     <View style={styles.root}>
       <Box safeArea p="2" py="8" w="90%" maxW="290">
@@ -47,9 +50,9 @@ const Gender = ({ route, navigation }) => {
             mt="1"
             backgroundColor={colors.indigo}
             onPress={async () => {
-              route.params.user.gender = gender
+              route.params.user.Gender = gender
               const response = await ClientRequest.addNewClient(route.params.user)
-              dispatch(loginUser(response))
+              dispatch(loginUser(response[0]))
             }}
             _text={{
               fontSize: 'sm',

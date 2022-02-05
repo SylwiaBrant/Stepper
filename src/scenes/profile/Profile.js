@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import {
-  StyleSheet, View, Text, Image,
+  StyleSheet, View, Text,
 } from 'react-native'
 import { useToast } from 'native-base'
 import { colors } from '../../theme'
@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import DateTime from '../../utils/datetime'
 import WorkoutResultsRequest from '../../routes/WorkoutResultsRequest'
+import store from '../../utils/store'
 
 const styles = StyleSheet.create({
   root: {
@@ -97,10 +98,14 @@ const Profile = ({ navigation }) => {
   // eslint-disable-line no-unused-vars
   const { isLoggedIn, user } = useSelector((state) => state.auth)
   const [workoutResult, setWorkoutResult] = useState('NULL')
+  const [workoutResult_Date, setWorkoutResult_Date] = useState('NULL')
   const toast = useToast()
+  console.log(store.getState())
 
   const fetchUserInfo = async () => {
-    const result = await WorkoutResultsRequest.getWorkoutResults(0)
+    const result = await WorkoutResultsRequest.getWorkoutResults(user.Id)
+    console.log(result)
+    console.log(user.Id)
     if (result instanceof String) {
       toast.show({
         title: 'Error',
@@ -108,7 +113,14 @@ const Profile = ({ navigation }) => {
         description: 'Encountered error, while saving result',
       })
     } else {
-      setWorkoutResult(result)
+      setWorkoutResult(result[0])
+      setWorkoutResult_Date(DateTime.formatTimeElapsed(
+        (new Date(workoutResult_Date.EndDate).getTime()
+          - new Date(workoutResult_Date.StartDate).getTime())
+        / 1000,
+      ))
+      console.log('Data')
+      console.log(result[0])
     }
   }
 
@@ -159,26 +171,22 @@ const Profile = ({ navigation }) => {
             This month:
           </Text>
         </View>
-          <View style={styles.avgView}>
-            <FontIcon style={styles.iconViewS} name="clock" size={20} />
-            <Text style={styles.badgeText}>Average time:</Text>
-          </View>
-        <View style={styles.avgViewS}>
-          <Text style={[styles.badgeText, styles.outcome]}>
-            {DateTime.formatTimeElapsed(
-              (new Date(workoutResult.EndDate).getTime()
-                - new Date(workoutResult.StartDate).getTime())
-                / 1000,
-            )}
-          </Text>
-        </View>
+        {/*   <View style={styles.avgView}> */}
+        {/*     <FontIcon style={styles.iconViewS} name="clock" size={20} /> */}
+        {/*     <Text style={styles.badgeText}>Average time:</Text> */}
+        {/*   </View> */}
+        {/* <View style={styles.avgViewS}> */}
+        {/*   <Text style={[styles.badgeText, styles.outcome]}> */}
+        {/*     {workoutResult_Date} */}
+        {/*   </Text> */}
+        {/* </View> */}
         <View>
           <View style={styles.avgViewS}>
             <FontIcon style={styles.iconViewS} name="shoe-prints" size={20} />
             <Text style={styles.badgeText}>Average steps:</Text>
           </View>
           <Text style={[styles.badgeText, styles.outcome]}>
-            {workoutResult.StepAmount}
+            {workoutResult?.StepAmount}
           </Text>
         </View>
         <View>
@@ -187,7 +195,7 @@ const Profile = ({ navigation }) => {
             <Text style={styles.badgeText}>Favourite activity:</Text>
           </View>
           <Text style={[styles.badgeText, styles.outcome]}>
-            {workoutResult.Type}
+            {workoutResult?.Type}
           </Text>
         </View>
       </View>

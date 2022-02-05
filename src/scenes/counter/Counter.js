@@ -139,7 +139,7 @@ const Counter = ({ navigation }) => { // eslint-disable-line no-unused-vars
 
   const onClickSave = async () => {
     const newWorkoutResult = {
-      Typ: 'Walk',
+      Type: 'Walk',
       StepAmount: currentStepCount,
       StartDate: DateTime.formatDate(startingDate),
       EndDate: DateTime.formatDate(

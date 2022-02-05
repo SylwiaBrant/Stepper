@@ -49,7 +49,7 @@ const Goal = ({ route, navigation }) => {
               fontSize: 'sm',
             }}
             onPress={() => {
-              route.params.user.goal = goal
+              route.params.user.Goal = goal
               navigation.navigate('Date', {
                 user: route.params.user,
               })

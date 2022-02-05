@@ -30,7 +30,7 @@ const Forgot = () => (
       <Heading
         size="lg"
         fontWeight="bold"
-        color="coolGray.800"
+        color={colors.indigo}
         _dark={{
           color: 'warmGray.50',
         }}
@@ -39,7 +39,7 @@ const Forgot = () => (
       </Heading>
       <Heading
         mt="1"
-        color={colors.indigo}
+        color="coolGray.600"
         fontWeight="medium"
         size="xs"
       >
@@ -53,7 +53,7 @@ const Forgot = () => (
             borderColor="#000000"
             backgroundColor="#ecffff"
             placeholder="e.g. Please enter Your email used to registration"
-            onChange={handleChange}
+            onChangeText={handleChange}
           />
         </FormControl>
         <Button

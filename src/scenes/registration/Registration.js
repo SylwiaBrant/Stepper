@@ -7,11 +7,10 @@ import {
   FormControl,
   Heading,
   Input,
-  useToast,
   VStack,
 } from 'native-base'
 import { colors } from '../../theme'
-import ClientRequest from '../../routes/ClientRequest'
+import { useDispatch } from 'react-redux'
 
 const styles = StyleSheet.create({
   root: {
@@ -29,7 +28,6 @@ const Registration = ({ navigation }) => {
   const [email, setEmail] = useState("")
   const [login, setLogin] = useState("")
   const [password, setPassword] = useState("")
-  const toast = useToast()
   const dispatch = useDispatch()
 
   return (
@@ -112,7 +110,7 @@ const Registration = ({ navigation }) => {
           </FormControl>
           <Button
             mt="2"
-            colorScheme="indigo"
+            backgroundColor={colors.indigo}
             onPress={() => {
               navigation.navigate('Height', {
                 user: {

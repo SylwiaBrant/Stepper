@@ -34,7 +34,7 @@ const TabNavigator = () => (
           case 'Counter':
             return (
               <FontIcon
-                name="skiing"
+                name="running"
                 color={focused ? colors.moccasin : colors.white}
                 size={20}
                 solid
@@ -71,7 +71,7 @@ const TabNavigator = () => (
     <Tab.Screen name="Home" component={HomeNavigator} />
     <Tab.Screen name="Profile" component={ProfileNavigator} />
     <Tab.Screen name="Counter" component={CounterNavigator} />
-    <Tab.Screen name="Random Activity" component={RandomActivityNavigator} />
+    <Tab.Screen name="Activity" component={RandomActivityNavigator} />
   </Tab.Navigator>
 )
 

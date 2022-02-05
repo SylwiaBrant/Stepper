@@ -48,15 +48,13 @@ const Login = ({ navigation }) => {
         </Heading>
         <VStack space={3} mt="5">
           <FormControl>
-            <FormControl.Label>Email:</FormControl.Label>
+            <FormControl.Label>Login:</FormControl.Label>
             <Input
               borderWidth={2}
               borderColor="#000000"
               backgroundColor="#ecffff"
               placeholder="e.g. Please enter Your email"
-              onChange={(event) => {
-                setLogin(event.target.value)
-              }}
+              onChangeText={newLogin => setLogin(newLogin)}
             />
           </FormControl>
           <FormControl>
@@ -68,9 +66,7 @@ const Login = ({ navigation }) => {
               backgroundColor="#ecffff"
               type="password"
               placeholder="e.g. Please enter Your password"
-              onChange={(event) => {
-                setPassword(event.target.value)
-              }}
+              onChangeText={newPassword => setPassword(newPassword)}
             />
             <Button
               _text={{
@@ -96,7 +92,8 @@ const Login = ({ navigation }) => {
             onPress={async () => {
               const response = await ClientRequest.loginClient(login, password)
               dispatch(loginUser(response[0]))
-              console.log(response[0])
+              console.log("RESPONSE")
+              console.log(response)
             }}
           >
             Sign in
